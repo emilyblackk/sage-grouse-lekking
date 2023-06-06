@@ -32,22 +32,21 @@ head(strut_89)
 #Part 2: Cleaning the data
 
 
-#Assign proper column names 
-merged_names <- paste(strut_89[1, ], strut_89[2, ], sep = " ") #collapse split column names 
-colnames(strut_89) <- ifelse(str_trim(strut_89[1, ]) 
-                             == "", strut_89[2, ], merged_names) #case whether to merge or not
-colnames(strut_89) <- tolower(colnames(strut_89)) #make lower case
-colnames(strut_89) <- gsub(" ", "_", colnames(strut_89)) #sub underscore for spaces
-colnames(strut_89) <- gsub("[^A-Za-z0-9_.]", "", colnames(strut_89)) #remove special characters
-strut_89 <- strut_89[-c(1, 2), ]  # remove rows 1 and 2
+#Assign proper column names with function
+fix_column_names <- function(data) {
+  merged_names <- paste(data[1, ], data[2, ], sep = " ")
+  colnames(data) <- ifelse(str_trim(data[1, ]) == "", data[2, ], merged_names)
+  colnames(data) <- tolower(colnames(data))
+  colnames(data) <- gsub(" ", "_", colnames(data))
+  colnames(data) <- gsub("[^A-Za-z0-9_.]", "", colnames(data))
+  data <- data[-c(1, 2), ]
+  return(data)
+}
+
+strut_89 <- fix_column_names(strut_89)
 
 #We now need to fill blank spaces with NAs
 #And remove redundant columns, or replace them
-#We can remove the lice column, even though we will go back to it later
-strut_89 <- strut_89 %>%
-  select(-lice)
-
-#Now, we can remove blank rows
 strut_89<- strut_89 %>% mutate_all(na_if,"")
 strut_89<- strut_89 %>% mutate_all(na_if," ") #Looks like some rows had a space instead of a blank
 strut_89 <- strut_89[rowSums(is.na(strut_89)) != ncol(strut_89), ]
@@ -57,6 +56,8 @@ strut_89 <- strut_89[rowSums(is.na(strut_89)) != ncol(strut_89), ]
 strut_89$year <- paste0("19", strut_89$year)
 #check that worked: 
 unique(strut_89$year) #it worked! 
+#We also need to standardize those dates
+
 
 #The names of the leks should be standardized for analyses
 strut_89$lek <- tolower(strut_89$lek) #make lower case
@@ -70,6 +71,10 @@ strut_89$lek <- tolower(strut_89$lek) #make lower case
  colnames(strut_89_averages) <- colnames(strut_89)
  strut_89_averages_lice <- strut_89_averages %>%
    dplyr::select(l_tag, r_tag, lice)
+ 
+ #We can remove the lice column now from strut_89
+ strut_89 <- strut_89 %>%
+   select(-lice)
  
  #I think we can cross-reference the lice information to the original by tag
 strut_89 <- merge(strut_89, 
@@ -193,7 +198,7 @@ strut_89 <- merge(strut_89,
  
  #Run an anova to see how lice affects...
  strut_89_no3$lice <- as.character(strut_89_no3$lice)
- aov(struts_5_min ~ lice + lek + as.numeric(year), 
+ aov(struts_5_min ~ lice + year, 
      data=strut_89_no3)
  
 #significant difference! 
