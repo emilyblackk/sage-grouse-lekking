@@ -10,7 +10,7 @@
 rm(list=ls())
 
 #load relevant libraries for script
-pkgs <- c("tidyverse", "Hmisc")
+pkgs <- c("tidyverse", "Hmisc", 'lubridate')
 #install.packages(pkgs)
 lapply(pkgs, library, character.only = TRUE)
 rm(pkgs)
@@ -56,8 +56,6 @@ strut_89 <- strut_89[rowSums(is.na(strut_89)) != ncol(strut_89), ]
 strut_89$year <- paste0("19", strut_89$year)
 #check that worked: 
 unique(strut_89$year) #it worked! 
-#We also need to standardize those dates
-
 
 #The names of the leks should be standardized for analyses
 strut_89$lek <- tolower(strut_89$lek) #make lower case
@@ -83,7 +81,27 @@ strut_89 <- merge(strut_89,
                     all.x = TRUE)
  
  
- 
+#Finally, we also need to standardize those dates using a function
+convert_date_columns <- function(data) {
+  # Split day and month using gsub
+  data$day <- gsub("-.*", "", data$date)
+  data$month <- gsub(".*-", "", data$date)
+  
+  # Convert month to numerical month
+  data$month <- match(data$month, month.abb)
+  
+  # Remove the original date column
+  data$date <- NULL
+  
+  #Move month and year to immediately after year
+  data <- data %>%
+    relocate(month, .after=year) %>%
+    relocate(day, .after=month)
+  
+  return(data)
+}
+strut_89 <- convert_date_columns(strut_89)
+
  
  
  
@@ -102,17 +120,7 @@ strut_89 <- merge(strut_89,
  #looks like column names got a bit messed up
  #Correct for proper column names
  
- 
- #Assign proper column names 
- merged_names <- paste(strut_90[1, ], strut_90[2, ], sep = " ") #collapse split column names 
- colnames(strut_90) <- ifelse(str_trim(strut_90[1, ]) 
-                              == "", strut_90[2, ], merged_names) #case whether to merge or not
- colnames(strut_90) <- tolower(colnames(strut_90)) #make lower case
- colnames(strut_90) <- gsub(" ", "_", colnames(strut_90)) #sub underscore for spaces
- colnames(strut_90) <- gsub("[^A-Za-z0-9_.]", "", colnames(strut_90)) #remove special characters
- strut_90 <- strut_90[-c(1, 2), ]  # remove rows 1 and 2
- 
- 
+strut_90 <- fix_column_names(strut_90)
  
  
  #Now, we can remove blank rows
@@ -126,16 +134,10 @@ strut_89 <- merge(strut_89,
  
  
  #I see an interesting inconsistency with the breeding data - there are no zeroes. 
- #I will assume that no data means no breeding, but I should double check this
- # Replace NA with 0
+ #However, there are zeros in the average data
+ # So, for this reason I believe we can assume that NAs are no breeds 
  strut_90$breed[is.na(strut_90$breed)] <- 0
- 
 
- #And remove redundant columns, or replace them
- # #We can remove the lice and malaria column, even though we will go back to it later
- # strut_90 <- strut_90 %>%
- #   select(-lice, -malaria)
- 
  #looks like the years need a 19 added to them
  #let's fix that
  strut_90$year <- paste0("19", strut_90$year)
@@ -155,7 +157,7 @@ strut_89 <- merge(strut_89,
  strut_90_averages_select <- strut_90_averages %>%
    dplyr::select(l_tag, r_tag, malaria, lice)
  
- #Remove the existing lice and malaria columns in strut_90 to make the merge easier
+ #Remove the existing lice, breed, and malaria columns in strut_90 to make the merge easier
  strut_90 <- strut_90 %>%
   select(-lice, -malaria)
  
@@ -165,8 +167,139 @@ strut_89 <- merge(strut_89,
                    by = c("l_tag", "r_tag"), 
                    all.x = TRUE)
  
+ #Fix the dates into new columns 
+ strut_90 <- convert_date_columns(strut_90)
+ 
  #Looks like it worked! Now I can make a preliminary combined dataset
  strut_merged <- rbind(strut_89, strut_90)
+ 
+ 
+ 
+ 
+ #Cool - now can we add in the 1988 data with the same workflow, and then merge
+ 
+ strut_88 <- read.csv("prelim_clean/1988_strut_frequency_data.csv", 
+                      header=FALSE)
+ head(strut_88)
+ #looks like column names got a bit messed up
+ #Correct for proper column names
+ 
+ strut_88 <- fix_column_names(strut_88)
+ #Looks like two columns are empty, and need be removed
+ strut_88 <- strut_88 %>%
+   dplyr::select(-na_na)
+ #We will also need to add a lice column, since it's missing from this one
+ strut_88$lice <- ''
+ 
+ 
+ #Now, we can remove blank rows
+ strut_88<- strut_88 %>% mutate_all(na_if,"")
+ strut_88<- strut_88 %>% mutate_all(na_if," ") #Looks like some rows had a space instead of a blank
+ strut_88 <- strut_88[rowSums(is.na(strut_88)) != ncol(strut_88), ]
+ 
+ 
+ 
+ #I see an interesting inconsistency with the breeding data - there are no zeroes. 
+ #However, there are zeros in the average data
+ # So, for this reason I believe we can assume that NAs are no breeds 
+ strut_88$breed[is.na(strut_88$breed)] <- 0
+ 
+ #looks like the years need a 19 added to them
+ #let's fix that
+ strut_88$year <- paste0("19", strut_88$year)
+ #check that worked: 
+ unique(strut_88$year) #it worked! 
+ 
+ #The names of the leks should be standardized for analyses
+ strut_88$lek <- tolower(strut_88$lek) #make lower case
+ strut_88$lek <-  gsub(" ", "_", strut_88$lek) 
+ 
+ 
+ 
+ #with information found elsewhere
+ #Looks like the lice column is cross-referenced in the averages dataset. Let's read that in
+ strut_88_averages <- read.csv("prelim_clean/1988_strut_average_data.csv")
+ colnames(strut_88_averages) <- colnames(strut_88)
+ strut_88_averages_select <- strut_88_averages %>%
+   dplyr::select(l_tag, r_tag, malaria, lice)
+ 
+ #Remove the existing lice and malaria columns in strut_88 to make the merge easier
+ strut_88 <- strut_88 %>%
+   select(-lice, -malaria)
+ 
+ #I think we can cross-reference the lice information to the original by tag
+ strut_88 <- merge(strut_88, 
+                   strut_88_averages_select, 
+                   by = c("l_tag", "r_tag"), 
+                   all.x = TRUE)
+ 
+ #Fix the dates into new columns 
+ strut_88 <- convert_date_columns(strut_88)
+ 
+ 
+ 
+ 
+ 
+ 
+ #Cool - now can we add in the 1987 data with the same workflow, and then merge
+ 
+ strut_87 <- read.csv("prelim_clean/1987_strut_frequency_data.csv", 
+                      header=FALSE)
+ head(strut_87)
+ #looks like column names got a bit messed up
+ #Correct for proper column names
+ 
+ strut_87 <- fix_column_names(strut_87)
+ #Looks like two columns are empty, and need be removed
+ strut_87 <- strut_87 %>%
+   dplyr::select(-na_na)
+ 
+ 
+ #Now, we can remove blank rows
+ strut_87<- strut_87 %>% mutate_all(na_if,"")
+ strut_87<- strut_87 %>% mutate_all(na_if," ") #Looks like some rows had a space instead of a blank
+ strut_87 <- strut_87[rowSums(is.na(strut_87)) != ncol(strut_87), ]
+ 
+ 
+ #looks like the years need a 19 added to them
+ #let's fix that
+ strut_87$year <- paste0("19", strut_87$year)
+ #check that worked: 
+ unique(strut_87$year) #it worked! 
+ 
+ #The names of the leks should be standardized for analyses
+ strut_87$lek <- tolower(strut_87$lek) #make lower case
+ strut_87$lek <-  gsub(" ", "_", strut_87$lek) 
+ 
+ 
+ 
+ #with information found elsewhere
+ #Looks like the lice column is cross-referenced in the averages dataset. Let's read that in
+ strut_87_averages <- read.csv("prelim_clean/1987_strut_average_data.csv")
+ colnames(strut_87_averages) <- colnames(strut_87)
+ strut_87_averages_select <- strut_87_averages %>%
+   dplyr::select(l_tag, r_tag, malaria, lice)
+ 
+ #Remove the existing lice and malaria columns in strut_87 to make the merge easier
+ strut_87 <- strut_87 %>%
+   select(-lice, -malaria)
+ 
+ #I think we can cross-reference the lice information to the original by tag
+ strut_87 <- merge(strut_87, 
+                   strut_87_averages_select, 
+                   by = c("l_tag", "r_tag"), 
+                   all.x = TRUE)
+ 
+ #Fix the dates into new columns 
+ strut_87 <- convert_date_columns(strut_87)
+ 
+ 
+ 
+ #Looks like it worked! Now I can make a preliminary combined dataset
+ strut_merged <- rbind(strut_90, strut_89, strut_88, strut_87)
+ 
+ 
+ 
  write.csv(strut_merged, "prelim_clean/strut_merged_df_prelim.csv")
  
  
@@ -180,9 +313,11 @@ strut_89 <- merge(strut_89,
    filter(!breed==3, !malaria==3, !lice==3)
  breed_malaria <- table(strut_89_no3$breed, strut_89_no3$malaria)
  breed_malaria
+ chisq.test(breed_malaria)
  
  breed_lice <- table(strut_89_no3$breed, strut_89_no3$lice)
  breed_lice
+ chisq.test(breed_lice)
  
  
  #Quick plot of number of struts vs lice
@@ -193,13 +328,14 @@ strut_89 <- merge(strut_89,
    stat_summary(aes(group = as.character(year)), geom = "errorbar", fun.data = mean_se, width = 0.2, color = "black", position = position_dodge(width = 0.8)) +
    stat_summary(aes(group = as.character(year)), geom = "crossbar", fun.data = mean_sdl, width = 0.4, color = "black", position = position_dodge(width = 0.8)) +
    labs(x = "Lice", y = "Number of struts in 5 minutes", colour = "Year") +
-   scale_colour_manual(values = c("1990" = "blue", "1989" = "green")) +
+   scale_colour_manual(values = c("1990" = "blue", "1989" = "green", 
+                                  '1988' = 'red', '1987'='orange')) +
    theme_classic()
  
  #Run an anova to see how lice affects...
- strut_89_no3$lice <- as.character(strut_89_no3$lice)
+ strut_89_no3$lice <- as.factor(strut_89_no3$lice)
  aov(struts_5_min ~ lice + year, 
-     data=strut_89_no3)
+     data=strut_merged)
  
 #significant difference! 
  
