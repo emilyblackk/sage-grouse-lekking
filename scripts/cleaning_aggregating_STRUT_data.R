@@ -1,6 +1,7 @@
 #Emily Black
-#Example data cleaning - floppy disk
+#Cleaning STRUT data from floppy disk
 #Created: 1 June 2023
+#Last modified: 7 June 2023
 
 #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
 #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
@@ -65,9 +66,10 @@ strut_89$lek <- tolower(strut_89$lek) #make lower case
  
  #with information found elsewhere
  #Looks like the lice column is cross-referenced in the averages dataset. Let's read that in
- strut_89_averages <- read.csv("prelim_clean/1989_strut_average_data.csv")
- colnames(strut_89_averages) <- colnames(strut_89)
- strut_89_averages_lice <- strut_89_averages %>%
+ strut_89_averages <- read.csv("prelim_clean/1989_strut_average_data.csv", 
+                               header=FALSE)
+strut_89_averages <- fix_column_names(strut_89_averages)
+  strut_89_averages_lice <- strut_89_averages %>%
    dplyr::select(l_tag, r_tag, lice)
  
  #We can remove the lice column now from strut_89
@@ -79,7 +81,7 @@ strut_89 <- merge(strut_89,
                     strut_89_averages_lice, 
                     by = c("l_tag", "r_tag"), 
                     all.x = TRUE)
- 
+
  
 #Finally, we also need to standardize those dates using a function
 convert_date_columns <- function(data) {
@@ -150,10 +152,10 @@ strut_90 <- fix_column_names(strut_90)
  
  
  
- #with information found elsewhere
  #Looks like the lice column is cross-referenced in the averages dataset. Let's read that in
- strut_90_averages <- read.csv("prelim_clean/1990_strut_average_data.csv")
- colnames(strut_90_averages) <- colnames(strut_90)
+ strut_90_averages <- read.csv("prelim_clean/1990_strut_average_data.csv", 
+                               header=FALSE)
+strut_90_averages <- fix_column_names(strut_90_averages)
  strut_90_averages_select <- strut_90_averages %>%
    dplyr::select(l_tag, r_tag, malaria, lice)
  
@@ -169,9 +171,6 @@ strut_90 <- fix_column_names(strut_90)
  
  #Fix the dates into new columns 
  strut_90 <- convert_date_columns(strut_90)
- 
- #Looks like it worked! Now I can make a preliminary combined dataset
- strut_merged <- rbind(strut_89, strut_90)
  
  
  
@@ -215,11 +214,15 @@ strut_90 <- fix_column_names(strut_90)
  strut_88$lek <-  gsub(" ", "_", strut_88$lek) 
  
  
- 
- #with information found elsewhere
  #Looks like the lice column is cross-referenced in the averages dataset. Let's read that in
- strut_88_averages <- read.csv("prelim_clean/1988_strut_average_data.csv")
- colnames(strut_88_averages) <- colnames(strut_88)
+ strut_88_averages <- read.csv("prelim_clean/1988_strut_average_data.csv", header=FALSE)
+ strut_88_averages <- fix_column_names(strut_88_averages)
+ #replace the last column name with lice 
+ strut_88_averages$lice <- strut_88_averages$na_na
+ strut_88_averages <- strut_88_averages%>%
+   select(-na_na)
+ 
+ 
  strut_88_averages_select <- strut_88_averages %>%
    dplyr::select(l_tag, r_tag, malaria, lice)
  
@@ -273,10 +276,10 @@ strut_90 <- fix_column_names(strut_90)
  
  
  
- #with information found elsewhere
  #Looks like the lice column is cross-referenced in the averages dataset. Let's read that in
- strut_87_averages <- read.csv("prelim_clean/1987_strut_average_data.csv")
- colnames(strut_87_averages) <- colnames(strut_87)
+ strut_87_averages <- read.csv("prelim_clean/1987_strut_average_data.csv", 
+                               header=FALSE)
+ strut_87_averages <- fix_column_names(strut_87_averages)
  strut_87_averages_select <- strut_87_averages %>%
    dplyr::select(l_tag, r_tag, malaria, lice)
  
@@ -290,6 +293,7 @@ strut_90 <- fix_column_names(strut_90)
                    by = c("l_tag", "r_tag"), 
                    all.x = TRUE)
  
+ 
  #Fix the dates into new columns 
  strut_87 <- convert_date_columns(strut_87)
  
@@ -300,7 +304,8 @@ strut_90 <- fix_column_names(strut_90)
  
  
  
- write.csv(strut_merged, "prelim_clean/strut_merged_df_prelim.csv")
+ write.csv(strut_merged, "prelim_clean/strut_merged_df_prelim.csv", 
+           row.names=FALSE)
  
  
  
@@ -327,17 +332,41 @@ strut_90 <- fix_column_names(strut_90)
    stat_summary(aes(group = as.character(year)), fun = mean, geom = "point", shape = 18, size = 3, color = "black", position = position_dodge(width = 0.8)) +
    stat_summary(aes(group = as.character(year)), geom = "errorbar", fun.data = mean_se, width = 0.2, color = "black", position = position_dodge(width = 0.8)) +
    stat_summary(aes(group = as.character(year)), geom = "crossbar", fun.data = mean_sdl, width = 0.4, color = "black", position = position_dodge(width = 0.8)) +
-   labs(x = "Lice", y = "Number of struts in 5 minutes", colour = "Year") +
+   labs(x = "lice", y = "Number of struts in 5 minutes", colour = "Year") +
+   scale_colour_manual(values = c("1990" = "blue", "1989" = "green", 
+                                  '1988' = 'red', '1987'='orange')) +
+   theme_classic()
+ 
+ strut_merged %>%
+   filter(!breed==3) %>%
+   ggplot(aes(y=as.numeric(struts_5_min), x=as.character(breed), colour = as.character(year)))+
+   geom_violin()+
+   labs(x="Breed", y="Time showing before sunrise")+
+   stat_summary(aes(group = as.character(year)), fun = mean, geom = "point", shape = 18, size = 3, color = "black", position = position_dodge(width = 0.8)) +
+   stat_summary(aes(group = as.character(year)), geom = "errorbar", fun.data = mean_se, width = 0.2, color = "black", position = position_dodge(width = 0.8)) +
+   stat_summary(aes(group = as.character(year)), geom = "crossbar", fun.data = mean_sdl, width = 0.4, color = "black", position = position_dodge(width = 0.8)) +
+   labs(x = "Breed", y = "Number of struts in 5 minutes", colour = "Year") +
    scale_colour_manual(values = c("1990" = "blue", "1989" = "green", 
                                   '1988' = 'red', '1987'='orange')) +
    theme_classic()
  
  #Run an anova to see how lice affects...
  strut_89_no3$lice <- as.factor(strut_89_no3$lice)
- aov(struts_5_min ~ lice + year, 
-     data=strut_merged)
+ summary(stats::aov(struts_5_min ~ lice*year, 
+     data=strut_merged))
  
 #significant difference! 
  
-
+ strut_89_avg_test <- strut_merged %>%
+    filter(year==1989) %>%
+   filter(!dist_to_hens==0, !dist_to_hens==4) %>%
+   group_by(l_tag, r_tag) %>%
+   dplyr::summarize(mean_struts_5 = mean(as.numeric(struts_5_min)), 
+             mean_time_strut = mean(as.numeric(time_strut)), 
+             mean_sunrise = mean(as.numeric(sunrise)), 
+             mean_time_to_sunrise = mean(as.numeric(time_to_sunrise)), 
+             mean_dist_to_hens = mean(as.numeric(dist_to_hens)), 
+             mean_breed = mean(as.numeric(breed)), 
+             mean_malaria = mean(as.numeric(malaria)), 
+             mean_lice = mean(as.numeric(lice)))
 
