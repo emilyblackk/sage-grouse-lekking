@@ -1,0 +1,155 @@
+#Emily Black
+#Cleaning TAGSORT from floppy disk
+#Created: 7 June 2023
+#Last modified: 9 June 2023
+
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+
+#Part 0. Script setup
+#clear R's brain
+rm(list=ls())
+
+#load relevant libraries for script
+pkgs <- c("tidyverse", "Hmisc", 'lubridate')
+#install.packages(pkgs)
+lapply(pkgs, library, character.only = TRUE)
+rm(pkgs)
+
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+
+#Part 1: Opening the data
+
+tagsort <- read.csv("prelim_clean/TAGSORT.csv", 
+                     header=FALSE)
+head(tagsort)
+#looks like column names got a bit messed up
+
+
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+
+#Part 2: Cleaning the data
+
+
+#Assign proper column names with function
+fix_column_names <- function(data) {
+  merged_names <- paste(data[1, ], data[2, ], sep = " ")
+  colnames(data) <- ifelse(str_trim(data[1, ]) == "", data[2, ], merged_names)
+  colnames(data) <- tolower(colnames(data))
+  colnames(data) <- gsub(" ", "_", colnames(data))
+  colnames(data) <- gsub("[^A-Za-z0-9_.]", "", colnames(data))
+  data <- data[-c(1, 2), ]
+  return(data)
+}
+
+tagsort <- fix_column_names(tagsort)
+
+
+
+#We now need to fill blank spaces with NAs
+#And remove redundant columns, or replace them
+tagsort <- tagsort %>% mutate_all(~ifelse(grepl("^\\s*$", .x), NA, .x))
+tagsort <- tagsort[rowSums(is.na(tagsort)) != ncol(tagsort), ]
+
+#The dates need a lot of standardizing, some are in - format and some are in " " format
+tagsort$date <- gsub("^\\s*(\\d)", "\\1", tagsort$date)
+tagsort$date <- gsub(" ", "-", tagsort$date)  # Replace spaces with dashes
+tagsort$date <- format(as.Date(tagsort$date, format = "%d-%b-%y"), "%d-%b-%y")  # Convert to standard format
+#Create month day year columns 
+tagsort$year <- format(as.Date(tagsort$date, format = "%d-%b-%y"), "%Y")
+tagsort <- tagsort %>%
+  relocate(year, .after = date)
+tagsort$month <- format(as.POSIXlt(tagsort$date, format = "%d-%b-%y"), "%m")
+tagsort <- tagsort %>%
+  relocate(month, .after = year)
+tagsort$day <- format(as.Date(tagsort$date, format = "%d-%b-%y"), "%d")
+tagsort <- tagsort %>%
+  relocate(day, .after = month)
+#Remove original date column 
+tagsort <- tagsort %>%
+  select(-date)
+
+
+#To match the strut data, change the time to proportion of time after midnight
+time_to_minutes <- function(time) {
+  if (is.na(time)) {
+    return(NA)
+  } else {
+    time_parts <- strsplit(time, ":")[[1]]
+    hours <- as.numeric(time_parts[1])
+    minutes <- as.numeric(time_parts[2])
+    total_minutes <- (hours * 60) + minutes
+    return(total_minutes)
+  }
+}
+
+tagsort$minutes_after_midnight <- sapply(tagsort$time, time_to_minutes) 
+tagsort <- tagsort %>%
+  mutate(prop_time=minutes_after_midnight/(24*60)) %>%
+  relocate(prop_time, .after = time)
+#Remove minutes after midnight 
+tagsort <- tagsort %>%
+  select(-minutes_after_midnight)
+
+
+#The strut datasets have tag codes, versus this one has colours and numbers. 
+#It would be great to standardize that so they can "talk" to each other
+tagsort <- tagsort %>%
+  mutate(left_tag_code = ifelse(!is.na(left_tag_color),
+                paste0(str_to_upper(substr(left_tag_color, 1, 1)), left_tag_number),
+                NA)) %>%
+  relocate(left_tag_code, .after = left_tag_number)
+
+tagsort <- tagsort %>%
+  mutate(right_tag_code = ifelse(!is.na(right_tag_color),
+                                paste0(str_to_upper(substr(right_tag_color, 1, 1)), right_tag_number),
+                                NA)) %>%
+  relocate(right_tag_code, .after = right_tag_number)
+
+#The names of the leks should be standardized for analyses
+tagsort$lek_name <- tolower(tagsort$lek_name) #make lower case
+tagsort$lek_name <-  gsub(" ", "_", tagsort$lek_name) 
+unique(tagsort$lek_name)
+
+
+#Looks like there is one bird with a plasma value of "36"
+#That can't be right, so replace with NA
+tagsort$blood_plasm[tagsort$blood_plasm > 2] <- NA
+
+
+#Move breed to after hematomas_on_combs
+tagsort <- tagsort %>%
+  relocate(breed, .after=hematomas_air_sacs)
+
+
+
+#Looks like for the colour columns, rather than putting NA where no colour
+#was observed they put XXXX or xxx. This needs to be standardized. 
+# Define the columns where 'x' values need to be replaced with NAs
+columns_to_replace <- c("comb_color", "air_sac_color")
+
+# Iterate over the columns and replace 'x' values with NAs
+for (column in columns_to_replace) {
+  tagsort[[column]][grepl("^x+$", tagsort[[column]])] <- NA
+}
+
+
+
+#many columns have pluses and minuses
+#Spoke with data owner, not certain what different pluses and minuses might mean
+#Just replace with no and yes to make simple and not over-interpret
+# Replace values using case_when
+tagsort <- tagsort %>%
+  mutate(hematomas_combs = case_when(hematomas_combs == "-" ~ "no",
+                                     hematomas_combs %in% c("+", "++") ~ "yes",
+                       TRUE ~ hematomas_combs),
+         hematomas_air_sacs = case_when(hematomas_air_sacs == "-" ~ "no",
+                                        hematomas_air_sacs %in% c("+", "++") ~ "yes",
+                       TRUE ~ hematomas_air_sacs))
+
+tagsort <- tagsort %>%
+  mutate(lice_back_of_head = case_when(lice_back_of_head == "-" ~ "no",
+                                       lice_back_of_head %in% c("+", "++") ~ "yes",
+                                     TRUE ~ lice_back_of_head))

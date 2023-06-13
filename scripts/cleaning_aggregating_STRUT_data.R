@@ -1,7 +1,7 @@
 #Emily Black
 #Cleaning STRUT data from floppy disk
 #Created: 1 June 2023
-#Last modified: 7 June 2023
+#Last modified: 9 June 2023
 
 #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
 #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
@@ -25,7 +25,6 @@ strut_89 <- read.csv("prelim_clean/1989_strut_frequency_data.csv",
                      header=FALSE)
 head(strut_89)
 #looks like column names got a bit messed up
-#Correct for proper column names
 
 #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
 #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
@@ -302,6 +301,35 @@ strut_90_averages <- fix_column_names(strut_90_averages)
  #Looks like it worked! Now I can make a preliminary combined dataset
  strut_merged <- rbind(strut_90, strut_89, strut_88, strut_87)
  
+ 
+ #One last thing to fix - the names of the leks aren't standard across dataframes
+ #s. needs to be replaced with south, fetter needs to be replaced with fetterman, 
+ #wind. needs to be replaced with windmill, and spgs needs ot be replaced with springs
+ # Define the replacement patterns and their corresponding replacements
+ patterns <- c("s\\.","south_fetter", "wind\\.", "spgs", "sybille")
+ replacements <- c("south", "south_fetterman", "windmill", "springs", "sybille_springs")
+ 
+ # Iterate over each pattern and replacement
+ for (i in seq_along(patterns)) {
+   strut_merged$lek <- gsub(patterns[i], replacements[i], strut_merged$lek, ignore.case = TRUE)
+ }
+ strut_merged$lek <- str_replace(strut_merged$lek, "south_fettermanman", "south_fetterman")
+ strut_merged$lek <- str_replace(strut_merged$lek, "sybille_springs_springs", "sybille_springs")
+ 
+ unique(strut_merged$lek)
+ 
+ #looks like we do actually need new tag columns: colour and number
+ #This allows us to compare between datasets
+ #split the tags into colour and number for easier comparison between data
+ strut_merged$right_tag_colour <- str_extract(strut_merged$r_tag, "[A-Za-z]+")
+ strut_merged$right_tag_number <- str_extract(strut_merged$r_tag, "\\d+")
+ strut_merged <- strut_merged %>%
+   relocate(contains('right_tag'), .after = r_tag)
+ 
+ strut_merged$left_tag_colour <- str_extract(strut_merged$l_tag, "[A-Za-z]+")
+ strut_merged$left_tag_number <- str_extract(strut_merged$l_tag, "\\d+")
+ strut_merged <- strut_merged %>%
+   relocate(contains('left_tag'), .after = l_tag)
  
  
  write.csv(strut_merged, "prelim_clean/strut_merged_df_prelim.csv", 
