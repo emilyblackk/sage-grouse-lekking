@@ -332,6 +332,45 @@ strut_90_averages <- fix_column_names(strut_90_averages)
    relocate(contains('left_tag'), .after = l_tag)
  
  
+ #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+ #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+ 
+ #Part 3: Get data to match tagsort standards 
+ 
+ #Tagsort has colours as actual colours - need to replace 
+ # Define a lookup table for color replacements
+ color_lookup <- c("G" = "green", "R" = "red", "Y" = "yellow", "W" = "white", "O" = "orange", "B" = "blue")
+ 
+ # Replace single letters with corresponding colors
+ strut_merged$left_tag_colour <- color_lookup[strut_merged$left_tag_colour]
+ strut_merged$right_tag_colour <- color_lookup[strut_merged$right_tag_colour]
+ 
+ #now rename the code columns to match tagsort 
+ strut_merged <- rename(strut_merged, right_tag_code = r_tag)
+ strut_merged <- rename(strut_merged, left_tag_code = l_tag)
+ 
+ strut_merged <- rename(strut_merged, lek_name = lek)
+ 
+ #Replace "juven" with "juv" to match strut
+ strut_merged$age <- gsub("juven", "juv", strut_merged$age)
+ 
+ 
+ 
+ #Rather than 0 and 1, have yes and no
+ strut_merged <- strut_merged %>%
+   mutate(breed = case_when(breed == "0" ~ "no",
+                            breed=="1" ~ 'yes',
+                            breed=="3" ~ 'NA',
+                                      TRUE ~ breed),
+          malaria = case_when(malaria == "0" ~ "no",
+                            malaria=="1" ~ 'yes',
+                            malaria=="3" ~ 'NA',
+                            TRUE ~ malaria),
+          lice = case_when(lice == "0" ~ "no",
+                            lice=="1" ~ 'yes',
+                           lice=="3" ~ 'NA',
+                            TRUE ~ lice))
+ 
  write.csv(strut_merged, "prelim_clean/strut_merged_df_prelim.csv", 
            row.names=FALSE)
  
