@@ -118,6 +118,10 @@ unique(tagsort$lek_name)
 #That can't be right, so replace with NA
 tagsort$blood_plasm[tagsort$blood_plasm > 2] <- NA
 
+#There is also a question mark in the age column that needs to be NA
+tagsort$age <- ifelse(tagsort$age %in% c("?"), NA, tagsort$age)
+
+
 
 #Move breed to after hematomas_on_combs
 tagsort <- tagsort %>%
@@ -143,21 +147,30 @@ for (column in columns_to_replace) {
 # Replace values using case_when
 tagsort <- tagsort %>%
   mutate(hematomas_combs = case_when(hematomas_combs == "-" ~ "no",
-                                     hematomas_combs %in% c("+", "++") ~ "yes",
+                                     hematomas_combs %in% c("+", "++", "+++") ~ "yes",
                        TRUE ~ hematomas_combs),
          hematomas_air_sacs = case_when(hematomas_air_sacs == "-" ~ "no",
                                         hematomas_air_sacs %in% c("+", "++") ~ "yes",
                        TRUE ~ hematomas_air_sacs))
 
 tagsort <- tagsort %>%
-  mutate(lice_back_of_head = case_when(lice_back_of_head == "-" ~ "no",
+  mutate(lice_back_of_head = case_when(lice_back_of_head %in% c("_", "-") ~ "no",
                                        lice_back_of_head %in% c("+", "++") ~ "yes",
                                      TRUE ~ lice_back_of_head))
+
+tagsort <- tagsort %>%
+  mutate(blood_tryps = case_when(blood_tryps == "-" ~ "no",
+                                       blood_tryps %in% c("+", "++") ~ "yes",
+                                       TRUE ~ blood_tryps))
 
 tagsort <- tagsort %>%
   mutate(breed = case_when(breed == "0" ~ "no",
                                        breed %in% c("1") ~ "yes",
                                        TRUE ~ breed))
+tagsort <- tagsort %>%
+  mutate(blood_plasm = case_when(blood_plasm == "0" ~ "no",
+                           blood_plasm %in% c("1") ~ "yes",
+                           TRUE ~ blood_plasm))
 
 tagsort <- tagsort %>%
   mutate(fecal_samples_mites = case_when(fecal_samples_mites == "-" ~ "no",
@@ -200,11 +213,24 @@ tagsort <- tagsort %>%
 
 tagsort$lice_present_on_air_sacs[!is.na(tagsort$lice_number_on_air_sacs)] <- 
   ifelse(tagsort$lice_number_on_air_sacs[!is.na(tagsort$lice_number_on_air_sacs)] > 0 | 
-                    tagsort$lice_number_on_air_sacs[!is.na(tagsort$lice_number_on_air_sacs)] == "+", "yes", "no")
+                    tagsort$lice_number_on_air_sacs[!is.na(tagsort$lice_number_on_air_sacs)] == "+"| 
+           tagsort$lice_number_on_air_sacs[!is.na(tagsort$lice_number_on_air_sacs)] == "++", "yes", "no")
 tagsort <- tagsort %>%
   relocate(lice_present_on_air_sacs, .before=lice_number_on_air_sacs)
 
 #Great, now remove pluses and minuses from the counts 
-tagsort$lice_number__on_combs <- ifelse(tagsort$lice_number__on_combs %in% c("+", "-"), NA, tagsort$lice_number__on_combs)
-tagsort$lice_number_on_air_sacs <- ifelse(tagsort$lice_number_on_air_sacs %in% c("+", "-"), NA, tagsort$lice_number_on_air_sacs)
+tagsort$lice_number__on_combs <- ifelse(tagsort$lice_number__on_combs %in% c("+", "-", "many", "++"), NA, tagsort$lice_number__on_combs)
+tagsort$lice_number_on_air_sacs <- ifelse(tagsort$lice_number_on_air_sacs %in% c("+", "-", "many", "++"), NA, tagsort$lice_number_on_air_sacs)
 
+write.csv(tagsort, 'prelim_clean/morphology_parasites_1987.csv', 
+          row.names=FALSE)
+
+
+#Having fun with the data
+
+tagsort %>%
+  ggplot(aes(x=as.character(breed), y=as.numeric(blood_pcv_mm), 
+             colour = as.character(hematomas_air_sacs))) + 
+  geom_point() + 
+  labs(x="Breed", y="Packed cell volume", colour="Hematomas present") + 
+  theme_classic()
