@@ -153,3 +153,58 @@ tagsort <- tagsort %>%
   mutate(lice_back_of_head = case_when(lice_back_of_head == "-" ~ "no",
                                        lice_back_of_head %in% c("+", "++") ~ "yes",
                                      TRUE ~ lice_back_of_head))
+
+tagsort <- tagsort %>%
+  mutate(breed = case_when(breed == "0" ~ "no",
+                                       breed %in% c("1") ~ "yes",
+                                       TRUE ~ breed))
+
+tagsort <- tagsort %>%
+  mutate(fecal_samples_mites = case_when(fecal_samples_mites == "-" ~ "no",
+                                     fecal_samples_mites %in% c("+", "++") ~ "yes",
+                                     TRUE ~ fecal_samples_mites),
+         fecal_samples_spores = case_when(fecal_samples_spores == "-" ~ "no",
+                                        fecal_samples_spores %in% c("+", "++") ~ "yes",
+                                        TRUE ~ fecal_samples_spores), 
+         fecal_samples_coccidia = case_when(fecal_samples_coccidia == "-" ~ "no",
+                                         fecal_samples_coccidia %in% c("+", "++") ~ "yes",
+                                         TRUE ~ fecal_samples_coccidia))
+
+#Move the comments column to the very end
+tagsort <- tagsort %>%
+  relocate(comments, .after=proportion_of_days_on_lek)
+
+#remove the any_other column
+#I also cannot decipher the blood_p, blood_l, and blood_h columns, 
+#so I will remove. 
+tagsort <- tagsort %>%
+  select(-any_other, -blood_p, -blood_l, -blood_h)
+
+
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
+
+#Part 3. Sorting out the lice column inconsistencies 
+#In the lice counts, some are counts, and some are plusses or minuses
+#I think I need to create columns for presence alone and then adjust the columns with 
+#counts to remove plusses and minuses 
+
+tagsort$lice_present_on_combs <- NA
+tagsort$lice_present_on_air_sacs <- NA
+
+tagsort$lice_present_on_combs[!is.na(tagsort$lice_number__on_combs)] <- 
+  ifelse(tagsort$lice_number__on_combs[!is.na(tagsort$lice_number__on_combs)] > 0 | 
+           tagsort$lice_number__on_combs[!is.na(tagsort$lice_number__on_combs)] == "+", "yes", "no")
+tagsort <- tagsort %>%
+  relocate(lice_present_on_combs, .before=lice_number__on_combs)
+
+tagsort$lice_present_on_air_sacs[!is.na(tagsort$lice_number_on_air_sacs)] <- 
+  ifelse(tagsort$lice_number_on_air_sacs[!is.na(tagsort$lice_number_on_air_sacs)] > 0 | 
+                    tagsort$lice_number_on_air_sacs[!is.na(tagsort$lice_number_on_air_sacs)] == "+", "yes", "no")
+tagsort <- tagsort %>%
+  relocate(lice_present_on_air_sacs, .before=lice_number_on_air_sacs)
+
+#Great, now remove pluses and minuses from the counts 
+tagsort$lice_number__on_combs <- ifelse(tagsort$lice_number__on_combs %in% c("+", "-"), NA, tagsort$lice_number__on_combs)
+tagsort$lice_number_on_air_sacs <- ifelse(tagsort$lice_number_on_air_sacs %in% c("+", "-"), NA, tagsort$lice_number_on_air_sacs)
+
