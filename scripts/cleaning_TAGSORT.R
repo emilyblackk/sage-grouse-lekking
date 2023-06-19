@@ -127,6 +127,14 @@ tagsort$age <- ifelse(tagsort$age %in% c("?"), NA, tagsort$age)
 tagsort <- tagsort %>%
   relocate(breed, .after=hematomas_air_sacs)
 
+#Rename the blood columns to match the parasitology being done
+tagsort <- tagsort %>%
+  rename(blood_leuco = blood_l)
+tagsort <- tagsort %>%
+  rename(blood_haema = blood_h)
+tagsort <- tagsort %>%
+  select(-blood_p)
+
 
 
 #Looks like for the colour columns, rather than putting NA where no colour
@@ -152,6 +160,16 @@ tagsort <- tagsort %>%
          hematomas_air_sacs = case_when(hematomas_air_sacs == "-" ~ "no",
                                         hematomas_air_sacs %in% c("+", "++") ~ "yes",
                        TRUE ~ hematomas_air_sacs))
+
+tagsort <- tagsort %>%
+  mutate(blood_haema = case_when(blood_haema == "-" ~ "no",
+                                 blood_haema %in% c("+", "++", "+++") ~ "yes",
+                                 blood_haema %in% c("+?") ~ "maybe",
+                                     TRUE ~ blood_haema),
+         blood_leuco = case_when(blood_leuco == "-" ~ "no",
+                                 blood_leuco %in% c("+", "++") ~ "yes",
+                                 blood_leuco %in% c("+?") ~ "maybe",
+                                        TRUE ~ blood_leuco))
 
 tagsort <- tagsort %>%
   mutate(lice_back_of_head = case_when(lice_back_of_head %in% c("_", "-") ~ "no",
@@ -187,11 +205,6 @@ tagsort <- tagsort %>%
 tagsort <- tagsort %>%
   relocate(comments, .after=proportion_of_days_on_lek)
 
-#remove the any_other column
-#I also cannot decipher the blood_p, blood_l, and blood_h columns, 
-#so I will remove. 
-tagsort <- tagsort %>%
-  select(-any_other, -blood_p, -blood_l, -blood_h)
 
 
 #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
@@ -229,8 +242,14 @@ write.csv(tagsort, 'prelim_clean/morphology_parasites_1987.csv',
 #Having fun with the data
 
 tagsort %>%
-  ggplot(aes(x=as.character(breed), y=as.numeric(blood_pcv_mm), 
+  ggplot(aes(x=as.character(blood_leuco), y=as.numeric(blood_pcv_mm), 
              colour = as.character(hematomas_air_sacs))) + 
   geom_point() + 
-  labs(x="Breed", y="Packed cell volume", colour="Hematomas present") + 
+  labs(x="Leuco", y="Packed cell volume", colour="Hematomas present") + 
   theme_classic()
+
+
+
+#Checking that tagsort matches binder data
+unique_tags_longlake <- tagsort %>%
+  filter(lek_name=="long_lake") 

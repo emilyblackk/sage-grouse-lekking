@@ -1,0 +1,26 @@
+id_number,year_collected,month_collected,day_collected,time_collected_24h,lek_name,collecter,female_id,num_eggs_in_clutch,estimated_hatch_month,estimated_hatch_day,actual_hatch_month,actual_hatch_day,length_mm,width_mm,initial_weight_g,obs_1_month,obs_1_day,obs_1_weight_g,obs_1_change_air_sac_mm,obs_1_notes,obs_2_month,obs_2_day,obs_2_weight,obs_2_change_air_sac_mm,obs_2_notes,obs_3_month,obs_3_day,obs_3_weight,obs_3_change_air_sac_mm,obs_3_notes,obs_4_month,obs_4_day,obs_4_weight_g,obs_4_change_air_sac_mm,obs_4_notes,general_notes
+N1-3,1990,5,28,16:00,north,White,NA,5,6,25,6,24,54.3,38,42.99,5,31,42.76,NA,NA,6,11,41.03,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+N1-4,1990,5,28,16:00,north,White,NA,5,6,25,6,23,55.8,39.4,45.6,5,31,45.27,NA,NA,6,11,43.57,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,pipped 22 June 90
+N1-5,1990,5,28,16:00,north,White,NA,5,6,25,6,24,58.4,38.6,47.1,5,31,46.83,NA,NA,6,11,44.85,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"pipped 22 June 90, helped out of shell, was bleeding, died 24 June 1990 "
+N1-2,1990,5,28,16:00,north,White,NA,5,6,25,NA,NA,57.7,38.6,47.37,5,31,47.12,NA,NA,6,11,45.28,NA,NA,7,1,NA,NA,"opened, chick (?) complete in development ",NA,NA,NA,NA,NA,never hatched
+P2-2-1,1990,5,13,7:00,PEN,Baldwin,NA,1,NA,NA,NA,NA,58.1,36.7,41.89,5,23,39.77,NA,NA,5,25,NA,none,not fertile,5,30,38.27,NA,NA,6,11,NA,NA,opened- not fertile ,NA
+P2-1,1990,5,11,7:00,PEN,Baldwin,NA,1,NA,NA,NA,NA,54.7,37.2,38.93,5,23,32.81,NA,NA,5,25,NA,none,not fertile,5,31,38.77,NA,NA,6,11,NA,NA,opened- not fertile,NA
+SS1-1,1990,5,16,18:25,sybille_springs,White,NA,7,6,7,6,10,55.1,39.1,45.78,5,23,44.43,NA,NA,5,31,42.92,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,pipped 8 June 
+SS1-2,1990,5,16,18:25,sybille_springs,White,NA,7,6,7,6,10,54.4,39.1,45.23,5,23,44.05,NA,NA,5,31,42.71,NA,NA,6,10,42.7,NA,looks as if died ,NA,NA,NA,NA,NA,NA
+SS1-3,1990,5,16,18:25,sybille_springs,White,NA,7,6,7,6,10,55.9,38.4,45.15,5,23,43.82,NA,NA,5,31,42.4,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,pipped 9 June 
+SS1-4,1990,5,16,18:25,sybille_springs,White,NA,7,6,7,NA,NA,56.6,39.1,46.57,5,23,45.03,NA,NA,5,31,43.45,NA,NA,6,11,41.13,NA,looks as if died ,NA,NA,NA,NA,NA,opened 22 June 90 - chick fully developed head (?)
+SS1-5,1990,5,16,18:25,sybille_springs,White,NA,7,6,7,NA,NA,55.3,38.2,42.9,5,23,41.46,NA,NA,5,31,39.89,NA,NA,6,11,37.57,NA,looks as if died ,NA,NA,NA,NA,NA,"opened on 22 June - chick fully developed, head (?) wing "
+SS1-6,1990,5,16,18:25,sybille_springs,White,NA,7,6,7,NA,NA,56.5,38.9,46.12,5,23,44.8,NA,NA,5,31,43.32,NA,NA,6,11,40.95,NA,looks as if died ,NA,NA,NA,NA,NA,"opened 22 June 1990 - chick fully developed, head (?) wing"
+SS1-7,1990,5,16,18:25,sybille_springs,White,NA,7,6,7,6,10,54.5,38.6,44.26,5,23,42.94,NA,NA,5,31,41.51,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,pipped 8 June 
+SS2-1,1990,5,24,15:30,sybille_springs,White,NA,3,6,15,6,19,56.8,38.8,46.22,5,31,44.87,NA,NA,6,11,42.7,NA,solid,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,pipped 18 June 90
+SS2-2,1990,5,24,15:30,sybille_springs,White,NA,3,6,15,NA,NA,53.85,38.9,43.2,5,31,41.54,NA,NA,6,11,38.87,NA,solid (?),7,2,NA,NA,opened - chick (?) developed ~ 3 weeks before death ,NA,NA,NA,NA,NA,NA
+SS2-3,1990,5,24,15:30,sybille_springs,White,NA,3,6,15,6,19,55.2,38.6,45.15,5,31,43.86,NA,NA,6,11,41.97,NA,solid,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+SS3-1,1990,5,24,16:00,sybille_springs,White,5614,8,5,31,6,1,55.5,39.4,41.57,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,pipped 31 May 90
+SS3-5,1990,5,24,16:00,sybille_springs,White,5614,8,5,31,6,1,55.9,38.95,42.09,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,pipped 31 May 90
+SS3-4,1990,5,24,16:00,sybille_springs,White,5614,8,5,31,6,1,54.7,39,40.68,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"cracked, pipped 31 May 90"
+SS3-3,1990,5,24,16:00,sybille_springs,White,5614,8,5,31,6,1,55.4,38.8,41.13,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,pipped 31 May 90
+SS3-2,1990,5,24,16:00,sybille_springs,White,5614,8,5,31,6,1,57.1,39.5,42.56,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,pipped 31 May 90
+SS3-7,1990,5,24,16:00,sybille_springs,White,5614,8,5,31,6,1,56.6,39.4,43.58,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,pipped 31 May 90
+SS3-6,1990,5,24,16:00,sybille_springs,White,5614,8,5,31,6,2,55.3,39.5,41.69,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,pipped 31 May 90
+SS3-8,1990,5,45,16:00,sybille_springs,White,5614,8,5,31,6,3,54.6,38.1,39.39,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,pipped 01 June 90 
+N1-1,1990,5,28,16:00,north,White,NA,5,6,25,NA,NA,55.6,39.5,46.13,5,31,45.9,NA,NA,6,11,44.21,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"pipped 22 June 90, died while hatching "

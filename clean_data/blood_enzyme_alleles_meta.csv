@@ -1,0 +1,13 @@
+﻿Column name,Values and units,Description,Notes
+tag,"Numerical, character","Unique identifier for patagial tag on grouse wing. Most commonly a series of numbers, but in some cases a letter or blank (NA). ",
+wing,Character,Indicates the wing tag was observed on (right or left). ,
+lek_name,Character,Name of lek individual was captured on. ,
+age,Character,"Age of grouse; either juvenile (<=1 year old), or adult (>1 year old). Juveniles separated from adults by morphology (different colouration, small air sacs) and behaviour (clumsiness, inadeptness at strutting). ",
+sex,Character,Sex of grouse (male or female). ,
+year,Numeric,"Year individual was captured and sampled from, ranging from 1987-1989. ","Blood samples from 1990 degraded prior to analysis, so are not included. "
+allele_aps,Numeric,"Two-digit number encoding genotype of individual at amino peptidase slow (APS) locus. Numbers encode genotype; two numbers that are the same indicate homozygous individual, while two different numbers indicate heterozygous individual.  ",Obtained from blood sample and subsequent blood enzyme assay. 
+allele_apm,Numeric,"Two-digit number encoding genotype of individual at amino peptidase medium (APM) locus. Numbers encode genotype; two numbers that are the same indicate homozygous individual, while two different numbers indicate heterozygous individual.  ",Obtained from blood sample and subsequent blood enzyme assay. 
+allele_apf,Numeric,"Two-digit number encoding genotype of individual at amino peptidase fast (APF) locus. Numbers encode genotype; two numbers that are the same indicate homozygous individual, while two different numbers indicate heterozygous individual.  ",Obtained from blood sample and subsequent blood enzyme assay. 
+allele_pmi,Numeric,"Two-digit number encoding genotype of individual at phosphomanose isomerase (PMI) locus. Numbers encode genotype; two numbers that are the same indicate homozygous individual, while two different numbers indicate heterozygous individual.  ",Obtained from blood sample and subsequent blood enzyme assay. 
+allele_est,Numeric,"Two-digit number encoding genotype of individual at colorimetric esterase-1 (EST) locus. Numbers encode genotype; two numbers that are the same indicate homozygous individual, while two different numbers indicate heterozygous individual.  ",Obtained from blood sample and subsequent blood enzyme assay. 
+status,Character,"Indicates special status of sampled individual, including those who were recaptured for analysis in subsequent years, or found shot in subsequent years. Type of status indicated by first word, and year of event indicated after underscore. ",
