@@ -483,8 +483,8 @@ cols_to_relocate <- colnames(df_1)[grepl("left_tag|right_tag", colnames(df_1))]
 # Relocate the identified columns after "capture_technique"
 df_1 <- df_1 %>%
   relocate(all_of(cols_to_relocate), .after = capture_technique) %>%
-  relocate(wygf_leg_band, .after = right_tag_code) %>%
-  rename(wygf_leg_band =wygf_leg_band)
+  relocate(wygf_leg_band__, .after = right_tag_code) %>%
+  rename(wygf_leg_band =wygf_leg_band__)
 
 
 
@@ -807,6 +807,21 @@ df_1 <- df_1 %>%
   rename(binder_pdf_scan_page = binder_pdf_scan_page) %>% 
   mutate(source = "binder") %>%
   relocate(source, .after = binder_pdf_scan_page)
+#last few fixes of df-2
+
+df_2[df_2 == "-"] <- "NA"
+df_2[df_2 == ""] <- "NA"
+df_2$left_tag_color <- ifelse(df_2$left_tag_color %in% color_lookup, df_2$left_tag_color, NA)
+
+df_1$left_tag_code[is.na(df_1$left_tag_code)] <- df_1$dominance[is.na(df_1$left_tag_code)]
+df_1 <- df_1 %>%
+  mutate(left_tag_code = case_when(
+    left_tag_code =="Master" ~ "Master cock", 
+    left_tag_code =="Peripheral" ~ "Subordinate", 
+    TRUE ~ left_tag_code
+  ))
+
+
 
 #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
 #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
@@ -815,7 +830,8 @@ df_1 <- df_1 %>%
 
 
 #Moment of truth: full join df_1 and df_2 
-joined_df <- full_join(df_1, df_2, by = c("left_tag_code", "right_tag_code"))
+#Since many don't have tags, we'll have to use a few other reference columns to do this 
+joined_df <- full_join(df_1, df_2, by = c("lek_name", "month", "day", 'left_tag_code'))
 
 
 #Columns that are the same but not used as an ID for the joined are assigned prefixes of .x and .y
@@ -833,7 +849,7 @@ joined_df <- joined_df %>%
 # joined_df <- select(joined_df, -comments.x, -comments.y)
 
 for (col in intersect(names(df_1), names(df_2))) {
-  if (col %in% c("left_tag_code", "right_tag_code", 'comments')) {
+  if (col %in% c("left_tag_code", "month", 'day', 'lek_name')) {
     next  # Skip the ID columns
   }
   
@@ -883,19 +899,62 @@ joined_df <- joined_df %>%
 #quick column fix: 
 joined_df[joined_df == "n/a"]  <- NA
 
+#Looks like there is a column where the left and right tags got flipped 
+#We can merge these based on the pdf page 
+
+
+# Identify the rows to merge based on the binder_pdf_scan_page values
+merge_rows <- c(3, 4)
+
+# Function to merge two values based on the given criteria
+merge_values <- function(value1, value2) {
+  if (is.na(value1) && !is.na(value2)) {
+    return(value2)
+  } else if (!is.na(value1) && is.na(value2)) {
+    return(value1)
+  } else if (!is.na(value1) && !is.na(value2)) {
+    if (identical(value1, value2)) {
+      return(value1)
+    } else {
+      return(paste(value1, value2, sep = ", "))
+    }
+  } else {
+    return(NA)
+  }
+}
+
+# Merge rows based on the given criteria
+merged_row <- joined_df %>%
+  filter(binder_pdf_scan_page %in% merge_rows)%>%
+  summarise(across(everything(), ~ merge_values(.[1], .[2])))
+
+# Remove the original rows to be merged
+joined_df <- joined_df %>%
+  filter(!binder_pdf_scan_page %in% merge_rows)
+
+# Append the merged row to the dataframe
+joined_df <- bind_rows(joined_df, merged_row)
+
 
 # Get non-matching column names
-non_matching_cols <- setdiff(names(original_joined_df), names(joined_df))
+non_matching_cols <- setdiff(names(joined_df), names(original_joined_df))
 # Print the non-matching column names
 print(non_matching_cols)
 original_joined_df <- original_joined_df %>%
-  rename(num_lice_on_comb = num__lice_on_comb) %>%
-  rename(hematomas_comb_comments = hematomas__comb_comments)
+  #select(-X) %>%
+  mutate(dominance = NA, 
+        hematoma_air_sacs_comments = NA ) %>%
+  relocate(dominance, .after = stresses_while_handling_describe) %>%
+  relocate(hematoma_air_sacs_comments, .after = total_num_hematomas_on_air_sacs)
+joined_df <- joined_df %>%
+  #$rename(weight_bird_and_bag_g = weight_bird_and_bag) %>%
+  #rename(weight_bird_g  = bird_weight_g) %>%
+  select(-blood_clotted)
 # %>%
 #   rename(lice_on_back_of_head = lice_back_of_head)
 
 full_join <- rbind(original_joined_df, joined_df)
-write.csv(full_join, "prelim_clean/binder_capture_data_prelim_N_MS.csv", 
+write.csv(full_join, "prelim_clean/binder_capture_data_prelim_N_MS_RS.csv", 
           row.names=FALSE)
 
 # 
