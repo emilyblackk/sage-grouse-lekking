@@ -1,0 +1,70 @@
+"","id_number","nest_number","egg_number","lek_name","collecter","female_id","num_eggs_in_clutch","estimated_hatch_month","estimated_hatch_day","actual_hatch_month","actual_hatch_day","general_notes","observation_num","year","month","day","days_after_collection","time24h","length_mm","width_mm","weight_g","change_air_sac_mm","notes"
+"1","N1-3","N1","3","north","White",NA,5,6,25,6,24,NA,"0",1990,"5","28","0","16:00","54.3","38","42.99",NA,NA
+"2","N1-3","N1","3","north","White",NA,5,6,25,6,24,NA,"1",1990,"5","31","3",NA,NA,NA,"42.76",NA,NA
+"3","N1-3","N1","3","north","White",NA,5,6,25,6,24,NA,"2",1990,"6","11","14",NA,NA,NA,"41.03",NA,NA
+"4","N1-4","N1","4","north","White",NA,5,6,25,6,23,"pipped 22 June 90","0",1990,"5","28","0","16:00","55.8","39.4","45.6",NA,NA
+"5","N1-4","N1","4","north","White",NA,5,6,25,6,23,"pipped 22 June 90","1",1990,"5","31","3",NA,NA,NA,"45.27",NA,NA
+"6","N1-4","N1","4","north","White",NA,5,6,25,6,23,"pipped 22 June 90","2",1990,"6","11","14",NA,NA,NA,"43.57",NA,NA
+"7","N1-5","N1","5","north","White",NA,5,6,25,6,24,"pipped 22 June 90, helped out of shell, was bleeding, died 24 June 1990 ","0",1990,"5","28","0","16:00","58.4","38.6","47.1",NA,NA
+"8","N1-5","N1","5","north","White",NA,5,6,25,6,24,"pipped 22 June 90, helped out of shell, was bleeding, died 24 June 1990 ","1",1990,"5","31","3",NA,NA,NA,"46.83",NA,NA
+"9","N1-5","N1","5","north","White",NA,5,6,25,6,24,"pipped 22 June 90, helped out of shell, was bleeding, died 24 June 1990 ","2",1990,"6","11","14",NA,NA,NA,"44.85",NA,NA
+"10","N1-2","N1","2","north","White",NA,5,6,25,NA,NA,"never hatched","0",1990,"5","28","0","16:00","57.7","38.6","47.37",NA,NA
+"11","N1-2","N1","2","north","White",NA,5,6,25,NA,NA,"never hatched","1",1990,"5","31","3",NA,NA,NA,"47.12",NA,NA
+"12","N1-2","N1","2","north","White",NA,5,6,25,NA,NA,"never hatched","2",1990,"6","11","14",NA,NA,NA,"45.28",NA,NA
+"13","N1-2","N1","2","north","White",NA,5,6,25,NA,NA,"never hatched","3",1990,"7","1","34",NA,NA,NA,NA,NA,"opened, chick (?) complete in development "
+"14","P2-2-1","P2","2-1","red_butte_pen","Baldwin",NA,1,NA,NA,NA,NA,NA,"0",1990,"5","13","0","7:00","58.1","36.7","41.89",NA,NA
+"15","P2-2-1","P2","2-1","red_butte_pen","Baldwin",NA,1,NA,NA,NA,NA,NA,"1",1990,"5","23","10",NA,NA,NA,"39.77",NA,NA
+"16","P2-2-1","P2","2-1","red_butte_pen","Baldwin",NA,1,NA,NA,NA,NA,NA,"2",1990,"5","25","12",NA,NA,NA,NA,"none","not fertile"
+"17","P2-2-1","P2","2-1","red_butte_pen","Baldwin",NA,1,NA,NA,NA,NA,NA,"3",1990,"5","30","17",NA,NA,NA,"38.27",NA,NA
+"18","P2-2-1","P2","2-1","red_butte_pen","Baldwin",NA,1,NA,NA,NA,NA,NA,"4",1990,"6","11","29",NA,NA,NA,NA,NA,"opened- not fertile "
+"19","P2-1","P2","1","red_butte_pen","Baldwin",NA,1,NA,NA,NA,NA,NA,"0",1990,"5","11","0","7:00","54.7","37.2","38.93",NA,NA
+"20","P2-1","P2","1","red_butte_pen","Baldwin",NA,1,NA,NA,NA,NA,NA,"1",1990,"5","23","12",NA,NA,NA,"32.81",NA,NA
+"21","P2-1","P2","1","red_butte_pen","Baldwin",NA,1,NA,NA,NA,NA,NA,"2",1990,"5","25","14",NA,NA,NA,NA,"none","not fertile"
+"22","P2-1","P2","1","red_butte_pen","Baldwin",NA,1,NA,NA,NA,NA,NA,"3",1990,"5","31","20",NA,NA,NA,"38.77",NA,NA
+"23","P2-1","P2","1","red_butte_pen","Baldwin",NA,1,NA,NA,NA,NA,NA,"4",1990,"6","11","31",NA,NA,NA,NA,NA,"opened- not fertile"
+"24","SS1-1","SS1","1","sybille_springs","White",NA,7,6,7,6,10,"pipped 8 June ","0",1990,"5","16","0","18:25","55.1","39.1","45.78",NA,NA
+"25","SS1-1","SS1","1","sybille_springs","White",NA,7,6,7,6,10,"pipped 8 June ","1",1990,"5","23","7",NA,NA,NA,"44.43",NA,NA
+"26","SS1-1","SS1","1","sybille_springs","White",NA,7,6,7,6,10,"pipped 8 June ","2",1990,"5","31","15",NA,NA,NA,"42.92",NA,NA
+"27","SS1-2","SS1","2","sybille_springs","White",NA,7,6,7,6,10,NA,"0",1990,"5","16","0","18:25","54.4","39.1","45.23",NA,NA
+"28","SS1-2","SS1","2","sybille_springs","White",NA,7,6,7,6,10,NA,"1",1990,"5","23","7",NA,NA,NA,"44.05",NA,NA
+"29","SS1-2","SS1","2","sybille_springs","White",NA,7,6,7,6,10,NA,"2",1990,"5","31","15",NA,NA,NA,"42.71",NA,NA
+"30","SS1-2","SS1","2","sybille_springs","White",NA,7,6,7,6,10,NA,"3",1990,"6","10","25",NA,NA,NA,"42.7",NA,"looks as if died "
+"31","SS1-3","SS1","3","sybille_springs","White",NA,7,6,7,6,10,"pipped 9 June ","0",1990,"5","16","0","18:25","55.9","38.4","45.15",NA,NA
+"32","SS1-3","SS1","3","sybille_springs","White",NA,7,6,7,6,10,"pipped 9 June ","1",1990,"5","23","7",NA,NA,NA,"43.82",NA,NA
+"33","SS1-3","SS1","3","sybille_springs","White",NA,7,6,7,6,10,"pipped 9 June ","2",1990,"5","31","15",NA,NA,NA,"42.4",NA,NA
+"34","SS1-4","SS1","4","sybille_springs","White",NA,7,6,7,NA,NA,"opened 22 June 90 - chick fully developed head (?)","0",1990,"5","16","0","18:25","56.6","39.1","46.57",NA,NA
+"35","SS1-4","SS1","4","sybille_springs","White",NA,7,6,7,NA,NA,"opened 22 June 90 - chick fully developed head (?)","1",1990,"5","23","7",NA,NA,NA,"45.03",NA,NA
+"36","SS1-4","SS1","4","sybille_springs","White",NA,7,6,7,NA,NA,"opened 22 June 90 - chick fully developed head (?)","2",1990,"5","31","15",NA,NA,NA,"43.45",NA,NA
+"37","SS1-4","SS1","4","sybille_springs","White",NA,7,6,7,NA,NA,"opened 22 June 90 - chick fully developed head (?)","3",1990,"6","11","26",NA,NA,NA,"41.13",NA,"looks as if died "
+"38","SS1-5","SS1","5","sybille_springs","White",NA,7,6,7,NA,NA,"opened on 22 June - chick fully developed, head (?) wing ","0",1990,"5","16","0","18:25","55.3","38.2","42.9",NA,NA
+"39","SS1-5","SS1","5","sybille_springs","White",NA,7,6,7,NA,NA,"opened on 22 June - chick fully developed, head (?) wing ","1",1990,"5","23","7",NA,NA,NA,"41.46",NA,NA
+"40","SS1-5","SS1","5","sybille_springs","White",NA,7,6,7,NA,NA,"opened on 22 June - chick fully developed, head (?) wing ","2",1990,"5","31","15",NA,NA,NA,"39.89",NA,NA
+"41","SS1-5","SS1","5","sybille_springs","White",NA,7,6,7,NA,NA,"opened on 22 June - chick fully developed, head (?) wing ","3",1990,"6","11","26",NA,NA,NA,"37.57",NA,"looks as if died "
+"42","SS1-6","SS1","6","sybille_springs","White",NA,7,6,7,NA,NA,"opened 22 June 1990 - chick fully developed, head (?) wing","0",1990,"5","16","0","18:25","56.5","38.9","46.12",NA,NA
+"43","SS1-6","SS1","6","sybille_springs","White",NA,7,6,7,NA,NA,"opened 22 June 1990 - chick fully developed, head (?) wing","1",1990,"5","23","7",NA,NA,NA,"44.8",NA,NA
+"44","SS1-6","SS1","6","sybille_springs","White",NA,7,6,7,NA,NA,"opened 22 June 1990 - chick fully developed, head (?) wing","2",1990,"5","31","15",NA,NA,NA,"43.32",NA,NA
+"45","SS1-6","SS1","6","sybille_springs","White",NA,7,6,7,NA,NA,"opened 22 June 1990 - chick fully developed, head (?) wing","3",1990,"6","11","26",NA,NA,NA,"40.95",NA,"looks as if died "
+"46","SS1-7","SS1","7","sybille_springs","White",NA,7,6,7,6,10,"pipped 8 June ","0",1990,"5","16","0","18:25","54.5","38.6","44.26",NA,NA
+"47","SS1-7","SS1","7","sybille_springs","White",NA,7,6,7,6,10,"pipped 8 June ","1",1990,"5","23","7",NA,NA,NA,"42.94",NA,NA
+"48","SS1-7","SS1","7","sybille_springs","White",NA,7,6,7,6,10,"pipped 8 June ","2",1990,"5","31","15",NA,NA,NA,"41.51",NA,NA
+"49","SS2-1","SS2","1","sybille_springs","White",NA,3,6,15,6,19,"pipped 18 June 90","0",1990,"5","24","0","15:30","56.8","38.8","46.22",NA,NA
+"50","SS2-1","SS2","1","sybille_springs","White",NA,3,6,15,6,19,"pipped 18 June 90","1",1990,"5","31","7",NA,NA,NA,"44.87",NA,NA
+"51","SS2-1","SS2","1","sybille_springs","White",NA,3,6,15,6,19,"pipped 18 June 90","2",1990,"6","11","18",NA,NA,NA,"42.7",NA,"solid"
+"52","SS2-2","SS2","2","sybille_springs","White",NA,3,6,15,NA,NA,NA,"0",1990,"5","24","0","15:30","53.85","38.9","43.2",NA,NA
+"53","SS2-2","SS2","2","sybille_springs","White",NA,3,6,15,NA,NA,NA,"1",1990,"5","31","7",NA,NA,NA,"41.54",NA,NA
+"54","SS2-2","SS2","2","sybille_springs","White",NA,3,6,15,NA,NA,NA,"2",1990,"6","11","18",NA,NA,NA,"38.87",NA,"solid (?)"
+"55","SS2-2","SS2","2","sybille_springs","White",NA,3,6,15,NA,NA,NA,"3",1990,"7","2","39",NA,NA,NA,NA,NA,"opened - chick (?) developed ~ 3 weeks before death "
+"56","SS2-3","SS2","3","sybille_springs","White",NA,3,6,15,6,19,NA,"0",1990,"5","24","0","15:30","55.2","38.6","45.15",NA,NA
+"57","SS2-3","SS2","3","sybille_springs","White",NA,3,6,15,6,19,NA,"1",1990,"5","31","7",NA,NA,NA,"43.86",NA,NA
+"58","SS2-3","SS2","3","sybille_springs","White",NA,3,6,15,6,19,NA,"2",1990,"6","11","18",NA,NA,NA,"41.97",NA,"solid"
+"59","SS3-1","SS3","1","sybille_springs","White",5614,8,5,31,6,1,"pipped 31 May 90","0",1990,"5","24","0","16:00","55.5","39.4","41.57",NA,NA
+"60","SS3-5","SS3","5","sybille_springs","White",5614,8,5,31,6,1,"pipped 31 May 90","0",1990,"5","24","0","16:00","55.9","38.95","42.09",NA,NA
+"61","SS3-4","SS3","4","sybille_springs","White",5614,8,5,31,6,1,"cracked, pipped 31 May 90","0",1990,"5","24","0","16:00","54.7","39","40.68",NA,NA
+"62","SS3-3","SS3","3","sybille_springs","White",5614,8,5,31,6,1,"pipped 31 May 90","0",1990,"5","24","0","16:00","55.4","38.8","41.13",NA,NA
+"63","SS3-2","SS3","2","sybille_springs","White",5614,8,5,31,6,1,"pipped 31 May 90","0",1990,"5","24","0","16:00","57.1","39.5","42.56",NA,NA
+"64","SS3-7","SS3","7","sybille_springs","White",5614,8,5,31,6,1,"pipped 31 May 90","0",1990,"5","24","0","16:00","56.6","39.4","43.58",NA,NA
+"65","SS3-6","SS3","6","sybille_springs","White",5614,8,5,31,6,2,"pipped 31 May 90","0",1990,"5","24","0","16:00","55.3","39.5","41.69",NA,NA
+"66","SS3-8","SS3","8","sybille_springs","White",5614,8,5,31,6,3,"pipped 01 June 90 ","0",1990,"5","45","0","16:00","54.6","38.1","39.39",NA,NA
+"67","N1-1","N1","1","north","White",NA,5,6,25,NA,NA,"pipped 22 June 90, died while hatching ","0",1990,"5","28","0","16:00","55.6","39.5","46.13",NA,NA
+"68","N1-1","N1","1","north","White",NA,5,6,25,NA,NA,"pipped 22 June 90, died while hatching ","1",1990,"5","31","3",NA,NA,NA,"45.9",NA,NA
+"69","N1-1","N1","1","north","White",NA,5,6,25,NA,NA,"pipped 22 June 90, died while hatching ","2",1990,"6","11","14",NA,NA,NA,"44.21",NA,NA

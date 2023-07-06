@@ -166,28 +166,47 @@ chick_final %>%
 write.csv(chick_final, 'prelim_clean/chick_hatch_data_prelim_clean.csv', 
           row.names = FALSE)
 
-#read in the cleaned data cause I added stuff in excel manually - 
-#new column: approximate days since hatch from notes on data
+# #read in the cleaned data cause I added stuff in excel manually - 
+# #new column: approximate days since hatch from notes on data
 cleaned_chick <- read.csv('prelim_clean/chick_hatch_data_prelim_clean.csv')
+# 
+# cleaned_chick <- cleaned_chick %>%
+#   filter(observation_num != 0) %>%
+#   group_by(notes) %>%
+#   mutate(days_diff = as.numeric(difftime(paste(year, month, day, sep = "-"), 
+#                                          paste(year[observation_num == 1], 
+#                                                month[observation_num == 1], 
+#                                                day[observation_num == 1], 
+#                                                sep = "-"), 
+#                                          units = "days")),
+#          approx_days_after_hatch = ifelse(observation_num == 1, approx_days_after_hatch, 
+#                                           approx_days_after_hatch[1] + days_diff))
 
+# #write back into prelim_clean
+# write.csv(cleaned_chick, 'prelim_clean/chick_hatch_data_final_clean.csv', 
+#           row.names = FALSE)
+cleaned_chick <- read.csv('prelim_clean/chick_hatch_data_final_clean.csv')
+#Looks like somewhere down the line all the zero values got removed
+# we can just bind rows those back in
+
+zero_chick <- chick_final %>%
+  filter(observation_num=="0")
+zero_chick <- zero_chick %>%
+  mutate_all(as.character)
 cleaned_chick <- cleaned_chick %>%
-  filter(observation_num != 0) %>%
-  group_by(notes) %>%
-  mutate(days_diff = as.numeric(difftime(paste(year, month, day, sep = "-"), 
-                                         paste(year[observation_num == 1], 
-                                               month[observation_num == 1], 
-                                               day[observation_num == 1], 
-                                               sep = "-"), 
-                                         units = "days")),
-         approx_days_after_hatch = ifelse(observation_num == 1, approx_days_after_hatch, 
-                                          approx_days_after_hatch[1] + days_diff))
-
-#write back into prelim_clean
-write.csv(cleaned_chick, 'prelim_clean/chick_hatch_data_final_clean.csv', 
-          row.names = FALSE)
+  mutate_all(as.character)
+cleaned_chick_final <- bind_rows(cleaned_chick, zero_chick)
 
 #merge columns into single hatch column
 cleaned_chick$days_after_hatch <- coalesce(cleaned_chick$days_after_hatch, cleaned_chick$approx_days_after_hatch)
+#remove the days diff column 
+cleaned_chick_final<- cleaned_chick_final %>%
+  select(-days_diff)
+cleaned_chick_final <- cleaned_chick_final %>%
+arrange(notes, observation_num)
+#write
+write.csv(cleaned_chick_final, 'prelim_clean/chick_hatch_data_prelim_clean_withzero.csv', 
+          row.names = FALSE)
 
 #Plot the new
 #Quick plot to check everything looks ok
@@ -299,7 +318,7 @@ df_final <- df_final[apply(df_final[(11+1):ncol(df_final)], 1, function(row) !al
 
 #Now relocate some columns
 egg_final <- df_final %>%
-  relocate(general_notes, .after = notes) %>%
+  #relocate(general_notes, .after = notes) %>%
   relocate(days_after_collection, .after = day)
 
 #Fix days after hatch to contain zero values for chicks whose weight was recorded on day 0
@@ -308,6 +327,9 @@ egg_final$days_after_collection <- ifelse(egg_final$observation_num == 0 & !is.n
 #Make the year column into 1990 across the board
 egg_final <- egg_final %>%
   mutate(year = 1990)
+
+#Rename "PEN" as "red_butte_pens"
+egg_final[egg_final=="PEN"] <- "red_butte_pen"
 
 #plot data to check everything transfered 
 egg_final %>%
@@ -318,7 +340,41 @@ geom_line() +
   labs(x="Days after collection", y = "Weight (g)", group = "Egg ID")+
   theme_classic()
 
+
+#create new column in egg with nest ID
+egg_final <- egg_final %>%
+  separate(id_number, into = c("nest_number", "egg_number"), sep = "-", remove = FALSE, extra = "merge")
+
+
 write.csv(egg_final, 'prelim_clean/egg_collection_morphometrics_1990.csv')
 
 
 
+
+#Merge the nest follow up and search data
+head(nest_search)
+colnames(nest_search)
+head(nest_followup)
+colnames(nest_followup)
+#Change the names of the followup notes column 
+nest_followup <- nest_followup %>%
+  rename(followup_notes = notes) %>%
+  rename(time_followup_24h = time_24h)
+nest_search <- nest_search %>%
+  rename(search_notes = notes) %>%
+  rename(year_found = year) %>%
+  rename(month_found = month) %>%
+  rename(day_found = day) 
+
+#Join
+full_join_nest <- full_join(nest_search, nest_followup, by=c('lek_name', 'nest_number', 'year_found', "month_found", "day_found"))
+
+#fix the format of the time columns 
+full_join_nest <- full_join_nest %>%
+  mutate(across(matches("time"), ~format(as.POSIXct(., format = "%H:%M:%S"), format = "%H:%M")))
+
+#Replace ARTR with sagebrush
+full_join_nest[full_join_nest=="ARTR"] <- "sagebrush"
+
+#Ok, write to save
+write.csv(full_join_nest, "prelim_clean/nest_egg_search_followup_1990.csv")
