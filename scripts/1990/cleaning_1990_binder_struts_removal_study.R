@@ -344,6 +344,20 @@ df_wider <- df_wider %>%
 #Add source column, and indicate from binder
 df_wider$source <- c('binder')
 
+#Add row with struts_5_min
+df_wider <- df_wider %>%
+  mutate(
+    time_start_calc = as.POSIXct(time_start, format = "%H:%M"),
+    time_end_calc = as.POSIXct(time_end, format = "%H:%M"),
+    time_diff = as.numeric(difftime(time_end_calc, time_start_calc, units = "mins")),
+    struts_5_min = ifelse(
+      is.na(time_start_calc) | is.na(time_end_calc),
+      as.numeric(num_of_struts),
+      ifelse(time_diff < 5, as.numeric(num_of_struts), round(as.numeric(num_of_struts) / time_diff * 5))
+    )
+  ) %>%
+  select(-time_start_calc, -time_end_calc, -time_diff)
+
 
 
 #The struts dataset from the floppy disks probably contains a lot of repeats

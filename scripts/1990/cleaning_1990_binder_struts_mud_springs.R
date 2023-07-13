@@ -1,7 +1,7 @@
 #Emily Black
 #Cleaning 1990 strut binder data - mud springs 
 #Created: 27 June 2023
-#Last modified: 10 July 2023
+#Last modified: 13 July 2023
 
 #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
 #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_
@@ -351,10 +351,16 @@ df_wider$source <- c('binder')
 #If time strutting was less than 5 minutes, original value retained
 #If more, adjusted for 5 minute period
 df_wider <- df_wider %>%
-  mutate(time_start_calc = as.POSIXct(time_start, format = "%H:%M"),  # Convert time_start to POSIXct
-         time_end_calc = as.POSIXct(time_end, format = "%H:%M"),      # Convert time_end to POSIXct
-         time_diff = as.numeric(difftime(time_end_calc, time_start_calc, units = "mins")),  # Calculate time difference in minutes
-         struts_5_min = ifelse(time_diff < 5, as.numeric(num_of_struts), round(as.numeric(num_of_struts) / time_diff * 5))) %>%
+  mutate(
+    time_start_calc = as.POSIXct(time_start, format = "%H:%M"),
+    time_end_calc = as.POSIXct(time_end, format = "%H:%M"),
+    time_diff = as.numeric(difftime(time_end_calc, time_start_calc, units = "mins")),
+    struts_5_min = ifelse(
+      is.na(time_start_calc) | is.na(time_end_calc),
+      as.numeric(num_of_struts),
+      ifelse(time_diff < 5, as.numeric(num_of_struts), round(as.numeric(num_of_struts) / time_diff * 5))
+    )
+  ) %>%
   select(-time_start_calc, -time_end_calc, -time_diff)
 
 
@@ -426,9 +432,14 @@ table_dates_floppy <- table(strut_filtered$month, strut_filtered$day)
 #Some overlap, but not all 
 
 
+
+
+
 #Join strut from binders and floppies
 #note - there are some inconsistencies with the tags
 #Some tags that are labelled "white" in the floppies and capture data
+#are not white in the binder data
+#Need to adjust the 
 full_join <- full_join(strut_binders, strut_filtered, by = c('lek_name', 'month', 'day', 'time_start', 'left_tag_color', 'right_tag_color'))
 
 #merge columns with commas to see where tags went wrong
@@ -600,16 +611,10 @@ filtered_df_full_join <- rbind(filtered_df_full_join, join_no_match)
 # Assign "yes" to "breed" if "num_of_copulations" has a value
 filtered_df_full_join$breed <- ifelse(!is.na(filtered_df_full_join$num_of_copulations), "yes", filtered_df_full_join$breed)
 
-
-
-#Update the breed column to reflect copulations from the binder data
-# Assign "yes" to "breed" if "num_of_copulations" has a value
-filtered_df_full_join$breed <- ifelse(!is.na(filtered_df_full_join$num_of_copulations), "yes", filtered_df_full_join$breed)
-
 #Now relocate a bunch of things for ease of reading
 filtered_df_full_join <- filtered_df_full_join %>%
   relocate(lek_name, .after = observer) %>%
- select(-row_number) %>%
+  select(-row_number) %>%
   relocate(left_tag_color, .after = type) %>%
   relocate(left_tag_number, .after = left_tag_color) %>%
   relocate(left_tag_code, .after = left_tag_number) %>%
@@ -617,7 +622,7 @@ filtered_df_full_join <- filtered_df_full_join %>%
   relocate(right_tag_number, .after = right_tag_color) %>%
   relocate(right_tag_code, .after = right_tag_number) %>%
   relocate(year, .before = month) %>%
-relocate(source, .before = binder_pdf_page_number) %>%
+  relocate(source, .before = binder_pdf_page_number) %>%
   select(-time_to_sunrise) %>%
   relocate(age, .after = right_tag_code) %>%
   relocate(num_of_struts, .after = time_end) %>%
@@ -627,9 +632,11 @@ relocate(source, .before = binder_pdf_page_number) %>%
   relocate(malaria, .after = breed ) %>%
   relocate(lice, .after = malaria) %>%
   relocate(other_fights_and_comments_, .after= lice ) %>%
+  relocate(struts_5_min, .after= num_of_struts) %>%
   rename(other_fights_and_comments = other_fights_and_comments_)%>%
-  relocate(struts_5_min, .after = num_of_struts) %>%
   select(-row)
+
+
 
 
 #Ok, I think it looks good! Let's write this to the data folder
