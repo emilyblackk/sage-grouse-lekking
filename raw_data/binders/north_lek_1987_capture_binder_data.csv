@@ -1,0 +1,37 @@
+﻿,,,,,,,,,,,,,,,,,,,,,,,Hematomas,Hematomas,Color,Color,Number,Number,WYGF Leg Band #,Cut Feathers,Collect,Labelled,samples collected,,samples collected,samples collected,,,,
+binder pdf scan page ,Date,Time Start,Lek,Age,Sex,Weight (bird and bag) g,Weight (bag) g,Bird Weight g,Total Length mm,Tail Length mm,Wing Length mm,Bill Length mm,Bill Depth mm,Keel Length mm,Comb Length mm,Tarsus length mm,Toe Length mm,Comb Color,num  Lice on Comb,Air Sac Color,num Lice on Air Sac,Lice on Back of Head (+/-),Air Sacs,Combs,Left Wing,Right Wing,Left Wing,Right Wing,,,,,Blood ,blood smears,Fecal,ectoparasites,Existing Injuries,Handling Injury, Stresses While Handling (describe),notes
+1,1987-03-13,,NORTH 3-9,ADULT,MALE,,,3.3,790,316,295,35.7,21.9,135,24,70,71,,,,,,,,Blue,Blue,201,202,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,,,Pleasant dude
+2,1987-03-13,,NORTH LEK 3-9,ADULT,MALE,,,3.5,794,313,308,35.7,21.2,130,19.9,72,67,,,,,,,,Red,Red,102,101,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,,,Feisty dude 
+3,1987-03-13,,NORTH LEK 3-9,ADULT,MALE,,,3.4,790,303,312,36.6,21.7,121,20.7,70,71,,,,,,,,Green ,Green,302,301,,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,,,,Feisty dude 
+4,1987-03-14,,NORTH LEK 3-9,ADULT,MALE,,,3.4,732,295,308,36.8,215,129,18.9,70,69,,,,,,,,White,Orange,403,0001,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,,,No blood data
+5,1987-03-14,,NORTH LEK 3-9,ADULT,MALE,,,3.25,720,299,300,39.8,23.2,130,23,71,74,,,,,,,,Red,Orange,0103,0002,,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,TRUE,,,,
+6,1987-03-14,,NORTH LEK 3-9,ADULT,MALE,,,3.4,771,307,304,37.7,20.6,135,21.4,70,72,,,,,,,,White,White,402,401,,TRUE,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,,,,
+7,1987-03-14,,NORTH LEK 3-9,ADULT,MALE,,,3.6,770,330,320,38,20.8,135,23.7,70,71,,,,,,,,Purple,Purple,502,501,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,,,
+8,1987-03-27,,NORTH LEK ,ADULT,MALE,,"
+",3.4,753,316,312,36.7,21.3,138,22.5,70,71,Green,,,,,,,White,Red,450,110,,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,TRUE,,,,No Lice
+9,1987-03-27,,NORTH LEK,JUVENILE,MALE,,"
+",2.75,720,230,290,39,22.1,137,21.4,69,72,Yellow,,,,,,,White,Blue,410,209,,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,TRUE,,,,Diarrhea
+10,1987-03-28,,NORTH LEK,JUVENILE,MALE,,"
+",2.5,,,,,,,,,,,,,,,,,White ,Blue,410,209,,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,,,,Recapture
+11,1987-03-27,,NORTH LEK,ADULT,MALE,,,3.4,777.875,323.85,339.852,46.5667,,165.1,22.225,57.15,71.4375,,,,,,,,,,,,,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,,,,MSB squeezed bit too hard 
+12,1987-04-04,,NORTH,ADULT ,MALE,,,3.2,750,325,299,36,17.45,136,25.66,67,65,Yellow,,Yellow/Green,,,,,Red,Blue,0109,0273,,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,FALSE,Red blotches on both air sacs,,,Master Cock. Breeder (written at top). Nape looks fine. Cloaca fine
+13,1987-04-04,,NORTH,JUVENILE,MALE,,,2.7,607,271,291,38.01,20.77,140,22.4,70,64,Yellow,,Yellow/Gray,,,,,Green,Blue,0399,0270,,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,FALSE,Red blotches + Flea(?) (not collected) on air sac,,,"Cloaca fine
+Nape fine "
+14,1987-04-04,,NORTH,ADULT,MALE,,,3.4,751,329,309,39.96,20.88,150,27.36,72,65,Yellow/Green,,Bright Yellow,,,,,Purple,Green,0573,0398,,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,FALSE,Several red blotches on air sacs,,,Nape fine 
+15,1987-04-04,,NORTH LEK,JUVENILE,MALE,,,2.6,685,266,303,38.78,20.25,135,21.71,67,65,Yellow/Gray,,Yellow,,,,,Green,Purple,0397,0574,,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,TRUE,air sacs red blotches,,,Cloaca fine. Nape fine 
+16,1987-04-19,8:15,NORTH LEK,YEARLING,MALE,,,3.1,730,239,304,37.6,22.1,132,21.4,70,71,Yellow/Green,0,Yellow,0,-,+,+,Green,White,390,482,,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,TRUE,,,,Mild case of diarrhea 
+17,1987-04-19,,NORTH LEK,YEARLING,MALE,,"
+",2.8,732,231,309,38.9,21,125,23.3,70,72,Yellow/Green,0,Golden Yellow,0,-,+,+,Blue,White,251,479,,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,TRUE,,,,
+18,1987-04-19,7:50,NORTH LEK,YEARLING,MALE,,"
+",2.6,700,216,299,36.7,23.7,132,21,71,65,Yellow,0,Yellow,0,-,-,+,Red,White,181,480,,FALSE,FALSE,FALSE,TRUE,FALSE,TRUE,TRUE,,,,
+19,1987-04-19,7:30,NORTH LEK,YEARLING,MALE,,"
+",2.7,715,234,287,38.5,21.4,131,24.5,69,69,Green,0,Yellow,0,-,+,+,White,Green,481,388,,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,TRUE,,,,
+20,1987-04-19,7:10,NORTH LEK,ADULT ,MALE,,"
+",3.05,763,280,296,37.7,21.1,132,23.2,70,68,Yellow/Green,0,Yellow/Green,0,-,+,+,White,Blue,478,252,,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,TRUE,,,,
+21,1987-04-19,7:30,NORTH LEK,ADULT ,MALE,,"
+",3,,,,,,,,,,,,,0,,,,Green,Green,302,301,,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,,,,Recapture
+22,1987-03-29,,NORTH LEK,ADULT ,FEMALE,,,1.8,579,185,253,30,18.9,101,,56,57,,,,,,,,Red,Orange,107,8,,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,TRUE,,,,No Radio -- Goddamn it!
+23,1987-03-29,,NORTH LEK,YEARLING,FEMALE,,"
+",1.75,557,185,257,31.5,18.5,105,,58,58,,,,,,,,Green,Orange,308,7,,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,TRUE,,,,No Radio
+24,1987-03-27,,NORTH LEK,YEARLING,FEMALE,,,1.7,582,194,263,30.1,17.9,101,,59,58,,,,,,,,Green,Green,310,309,,TRUE,TRUE,TRUE,TRUE,FALSE,TRUE,TRUE,,,,RADIO 150.866
+25,1987-03-27,,NORTH LEK,ADULT,FEMALE,,,1.8,557,185,258,32.2,17.5,107,,57,61,,,,,,,,White,White,446,445,,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,TRUE,,,,RADIO 151.046
