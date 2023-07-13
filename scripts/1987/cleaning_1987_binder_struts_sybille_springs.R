@@ -235,7 +235,7 @@ df_wider$left_tag_color <- toupper(df_wider$left_tag_color)
 
 
 # Define a lookup table for color replacements
-color_lookup <- c("G" = "green", "R" = "red", "Y" = "yellow", "W" = "white", "O" = "orange", "B" = "blue", "U" = "UM")
+color_lookup <- c("G" = "green", "R" = "red", "Y" = "yellow", "W" = "white", "O" = "orange", "B" = "blue", "P" = "purple",  "U" = "UM")
 
 replace_colors <- function(x, color_lookup) {
   # Split the string into individual color codes
@@ -371,10 +371,16 @@ df_wider <- df_wider %>%
 df_wider$source <- c('binder')
 
 df_wider <- df_wider %>%
-  mutate(time_start_calc = as.POSIXct(time_start, format = "%H:%M"),  # Convert time_start to POSIXct
-         time_end_calc = as.POSIXct(time_end, format = "%H:%M"),      # Convert time_end to POSIXct
-         time_diff = as.numeric(difftime(time_end_calc, time_start_calc, units = "mins")),  # Calculate time difference in minutes
-         struts_5_min = ifelse(time_diff < 5, as.numeric(num_of_struts), round(as.numeric(num_of_struts) / time_diff * 5))) %>%
+  mutate(
+    time_start_calc = as.POSIXct(time_start, format = "%H:%M"),
+    time_end_calc = as.POSIXct(time_end, format = "%H:%M"),
+    time_diff = as.numeric(difftime(time_end_calc, time_start_calc, units = "mins")),
+    struts_5_min = ifelse(
+      is.na(time_start_calc) | is.na(time_end_calc),
+      as.numeric(num_of_struts),
+      ifelse(time_diff < 5, as.numeric(num_of_struts), round(as.numeric(num_of_struts) / time_diff * 5))
+    )
+  ) %>%
   select(-time_start_calc, -time_end_calc, -time_diff)
 
 

@@ -217,7 +217,7 @@ df_wider$left_tag_color <- toupper(df_wider$left_tag_color)
 
 
 # Define a lookup table for color replacements
-color_lookup <- c("G" = "green", "R" = "red", "Y" = "yellow", "W" = "white", "O" = "orange", "B" = "blue", "U" = "UM")
+color_lookup <- c("G" = "green", "R" = "red", "Y" = "yellow", "W" = "white", "O" = "orange", "B" = "blue", "P" = "purple",  "U" = "UM")
 
 replace_colors <- function(x, color_lookup) {
   # Split the string into individual color codes
@@ -644,7 +644,6 @@ filtered_df_full_join <- filtered_df_full_join %>%
   relocate(struts_5_min, .after= num_of_struts) %>%
   rename(other_fights_and_comments = other_fights_and_comments_)%>%
   select(-row)
-
 #Open the previous strut dataset
 previous_strut <- read.csv('prelim_clean/1990/merged_struts_binders_floppy_MS.csv')
 

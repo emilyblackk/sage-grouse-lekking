@@ -233,7 +233,7 @@ df_wider$left_tag_color <- toupper(df_wider$left_tag_color)
 
 
 # Define a lookup table for color replacements
-color_lookup <- c("G" = "green", "R" = "red", "Y" = "yellow", "W" = "white", "O" = "orange", "B" = "blue", "U" = "UM")
+color_lookup <- c("G" = "green", "R" = "red", "Y" = "yellow", "W" = "white", "O" = "orange", "B" = "blue", "P" = "purple",  "U" = "UM")
 
 replace_colors <- function(x, color_lookup) {
   # Split the string into individual color codes

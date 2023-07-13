@@ -237,7 +237,7 @@ df_wider$left_tag_color <- toupper(df_wider$left_tag_color)
 
 
 # Define a lookup table for color replacements
-color_lookup <- c("G" = "green", "R" = "red", "Y" = "yellow", "W" = "white", "O" = "orange", "B" = "blue", "U" = "UM")
+color_lookup <- c("G" = "green", "R" = "red", "Y" = "yellow", "W" = "white", "O" = "orange", "B" = "blue", "P" = "purple",  "U" = "UM")
 
 replace_colors <- function(x, color_lookup) {
   # Split the string into individual color codes
@@ -375,13 +375,17 @@ df_wider$source <- c('binder')
 #Need to standardize by times - if they recorded for more than five minutes, need struts
 #per five minutes to talk to the floppies
 df_wider <- df_wider %>%
-  mutate(time_start_calc = as.POSIXct(time_start, format = "%H:%M"),  # Convert time_start to POSIXct
-         time_end_calc = as.POSIXct(time_end, format = "%H:%M"),      # Convert time_end to POSIXct
-         time_diff = as.numeric(difftime(time_end_calc, time_start_calc, units = "mins")),  # Calculate time difference in minutes
-         struts_5_min = ifelse(time_diff < 5, as.numeric(num_of_struts), round(as.numeric(num_of_struts) / time_diff * 5))) %>%
+  mutate(
+    time_start_calc = as.POSIXct(time_start, format = "%H:%M"),
+    time_end_calc = as.POSIXct(time_end, format = "%H:%M"),
+    time_diff = as.numeric(difftime(time_end_calc, time_start_calc, units = "mins")),
+    struts_5_min = ifelse(
+      is.na(time_start_calc) | is.na(time_end_calc),
+      as.numeric(num_of_struts),
+      ifelse(time_diff < 5, as.numeric(num_of_struts), round(as.numeric(num_of_struts) / time_diff * 5))
+    )
+  ) %>%
   select(-time_start_calc, -time_end_calc, -time_diff)
-
-
 
 
 
@@ -504,10 +508,10 @@ for (col in intersect(names(no_match_binder), names(no_match_floppy))) {
 strut_filtered$type <- c('strut')
 
 df_wider <- df_wider %>% mutate_all(as.character)
-df_full_join <- full_join(df_wider, strut_filtered, by = c('type', 'month', 'day', 'time_start', 'left_tag_color'))
+df_full_join <- full_join(df_wider, strut_filtered, by = c('type', 'month', 'day', 'time_start', 'left_tag_color', 'right_tag_color'))
 #merge columns with commas to see where tags went wrong
 for (col in intersect(names(df_wider), names(strut_filtered))) {
-  if (col %in% c('type', 'month', 'day', 'time_start', 'left_tag_color')) {
+  if (col %in% c('type', 'month', 'day', 'time_start', 'left_tag_color', 'right_tag_color')) {
     next  # Skip the ID columns
   }
   
@@ -580,10 +584,10 @@ no_match_floppy <- df_full_join %>%
   filter(!source=="binder, floppy") %>%
   filter(source=="floppy") %>%
   filter(type=="strut")
-join_no_match <- full_join(no_match_binder, no_match_floppy, by = c("month", "day", 'right_tag_color',"struts_5_min"))
+join_no_match <- full_join(no_match_binder, no_match_floppy, by = c("month", "day", 'right_tag_color', "struts_5_min"))
 
 for (col in intersect(names(no_match_binder), names(no_match_floppy))) {
-  if (col %in% c("month", "day", "right_tag_color","struts_5_min")) {
+  if (col %in% c("month", "day", "right_tag_color", "struts_5_min")) {
     next  # Skip the ID columns
   }
   
@@ -616,7 +620,6 @@ filtered_df_full_join <- rbind(filtered_df_full_join, join_no_match)
 
 
 
-
 #Update the breed column to reflect copulations from the binder data
 # Assign "yes" to "breed" if "num_of_copulations" has a value
 filtered_df_full_join$breed <- ifelse(!is.na(filtered_df_full_join$num_of_copulations), "yes", filtered_df_full_join$breed)
@@ -637,14 +640,15 @@ filtered_df_full_join <- filtered_df_full_join %>%
   relocate(age, .after = right_tag_code) %>%
   relocate(num_of_struts, .after = time_end) %>%
   relocate(sunrise_time, .after = time) %>%
-  relocate(struts_5_min, .after = num_of_struts) %>%
   relocate(distance_to_hens_category, .before = distance_to_hens_notes) %>%
   relocate(breed, .after = num_of_copulations) %>%
   relocate(malaria, .after = breed ) %>%
   relocate(lice, .after = malaria) %>%
   relocate(other_fights_and_comments_, .after= lice ) %>%
+  relocate(struts_5_min, .after= num_of_struts) %>%
   rename(other_fights_and_comments = other_fights_and_comments_)%>%
   select(-row)
+
 
 #Open the previous strut dataset
 # previous_strut <- read.csv('prelim_clean/merged_struts_binders_floppy_MS_N_SF_RS.csv')

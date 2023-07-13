@@ -238,7 +238,7 @@ df_wider$left_tag_color <- toupper(df_wider$left_tag_color)
 
 
 # Define a lookup table for color replacements
-color_lookup <- c("G" = "green", "R" = "red", "Y" = "yellow", "W" = "white", "O" = "orange", "B" = "blue", "U" = "UM")
+color_lookup <- c("G" = "green", "R" = "red", "Y" = "yellow", "W" = "white", "O" = "orange", "B" = "blue", "P" = "purple",  "U" = "UM")
 
 replace_colors <- function(x, color_lookup) {
   # Split the string into individual color codes
@@ -448,6 +448,8 @@ strut_binders <- df_wider %>%
 strut_binders <- strut_binders %>% mutate_all(as.character)
 strut_filtered <- strut_filtered %>% mutate_all(as.character) 
 
+#manually fix an error in the floppies
+strut_filtered$day <- ifelse(strut_filtered$month == '5' & strut_filtered$day =='8', '9', strut_filtered$day)
 
 
 #Join strut from binders and floppies

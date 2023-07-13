@@ -235,7 +235,7 @@ df_wider$left_tag_color <- toupper(df_wider$left_tag_color)
 
 
 # Define a lookup table for color replacements
-color_lookup <- c("G" = "green", "R" = "red", "Y" = "yellow", "W" = "white", "O" = "orange", "B" = "blue", "U" = "UM")
+color_lookup <- c("G" = "green", "R" = "red", "Y" = "yellow", "W" = "white", "O" = "orange", "B" = "blue", "P" = "purple",  "U" = "UM")
 
 replace_colors <- function(x, color_lookup) {
   # Split the string into individual color codes
@@ -374,10 +374,16 @@ df_wider$source <- c('binder')
 #Standardize struts per 5 minute
 #But if strutting for less than 5 minutes, keep original number
 df_wider <- df_wider %>%
-  mutate(time_start_calc = as.POSIXct(time_start, format = "%H:%M"),  # Convert time_start to POSIXct
-         time_end_calc = as.POSIXct(time_end, format = "%H:%M"),      # Convert time_end to POSIXct
-         time_diff = as.numeric(difftime(time_end_calc, time_start_calc, units = "mins")),  # Calculate time difference in minutes
-         struts_5_min = ifelse(time_diff < 5, as.numeric(num_of_struts), round(as.numeric(num_of_struts) / time_diff * 5))) %>%
+  mutate(
+    time_start_calc = as.POSIXct(time_start, format = "%H:%M"),
+    time_end_calc = as.POSIXct(time_end, format = "%H:%M"),
+    time_diff = as.numeric(difftime(time_end_calc, time_start_calc, units = "mins")),
+    struts_5_min = ifelse(
+      is.na(time_start_calc) | is.na(time_end_calc),
+      as.numeric(num_of_struts),
+      ifelse(time_diff < 5, as.numeric(num_of_struts), round(as.numeric(num_of_struts) / time_diff * 5))
+    )
+  ) %>%
   select(-time_start_calc, -time_end_calc, -time_diff)
 
 
@@ -444,6 +450,10 @@ strut_filtered <- strut_filtered %>% mutate_all(as.character)
 
 
 #Join strut from binders and floppies
+#note - there are some inconsistencies with the tags
+#Some tags that are labelled "white" in the floppies and capture data
+#are not white in the binder data
+#Need to adjust the 
 full_join <- full_join(strut_binders, strut_filtered, by = c('lek_name', 'month', 'day', 'time_start', 'left_tag_color', 'right_tag_color'))
 
 #merge columns with commas to see where tags went wrong
@@ -639,6 +649,7 @@ filtered_df_full_join <- filtered_df_full_join %>%
   relocate(struts_5_min, .after= num_of_struts) %>%
   rename(other_fights_and_comments = other_fights_and_comments_)%>%
   select(-row)
+
 
 #Open the previous strut dataset
 previous_strut <- read.csv('prelim_clean/1987/merged_struts_binders_floppy_1987_C_BW_MS_N.csv')
