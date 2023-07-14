@@ -546,6 +546,9 @@ all_struts$other_fights_and_comments <- gsub("^\\s+|\\s+$", "", all_struts$other
 all_struts$other_fights_and_comments <- gsub("02-Jan", "1 of 2", all_struts$other_fights_and_comments)
 all_struts$other_fights_and_comments <- gsub("02-Feb", "2 of 2", all_struts$other_fights_and_comments)
 
+#move sunrise time to after arrival time
+all_struts <- all_struts %>%
+  relocate(sunrise_time, .after = arrival_time)
 
 #last thing to do - split struts and copulations from observations to clean up columns
 struts_cops <- all_struts %>%
@@ -559,6 +562,9 @@ observations <- all_struts %>%
 unique(observations$type)
 #remove columns with only NA
 observations <- observations[, colSums(is.na(observations)) != nrow(observations)]
+#remove the type column
+observations <- observations %>%
+  select(-type)
 
 
 #save to file
@@ -566,6 +572,11 @@ write.csv(observations, "clean_data/lek_observations_1987_1990.csv",
           row.names=FALSE)
 write.csv(struts_cops, "clean_data/lek_struts_copulations_1987_1990.csv", 
           row.names=FALSE)
+
+
+#randomly check 10 rows from each dataframe against files
+samples_observations <- sample_n(observations, 10)
+samples_struts <- sample_n(struts_cops, 10)
 
 
 

@@ -1,0 +1,102 @@
+﻿"Metadata for morphology and parasite records, 1987 to 1990",,,
+,,,
+Data curator: Emily Black ,,,
+"Affiliation: Department of Zoology, University of British Columbia, Vancouver, BC, and the Living Data Project ",,,
+Contact: emily@zoology.ubc.ca,,,
+,,,
+"Data collectors: Pat Deibert (nee White) , Linda Johnson, Margo Spurrier, Dr. Mark S. Boyce",,,
+"Affiliation: PD - Bureau of Land Management, Cheyenne, Wyoming; MSB - University of Alberta, Edmonton, AB",,,
+,,,
+"Data entry: Nav Gahir, Isabel Weise",,,
+"Affiliation: NG, IW - Living Data Project",,,
+,,,
+Data description: ,,,
+"From 1987-1990, greater sage-grouse leks were visited by graduate students, professors, and volunteers to survey for bird abundance, lekking behaviour, and strutting and copulation behaviour. Included in this dataset is grouse capture and laboratory followup data detailing the morphology (body size, sex, age, etc.) and parasitology (malaria, lice, hematomas, coccidia, etc.) of captured individuals. Fecal, blood, cecal and ectoparasite samples were obtained and brought back to the lab for analysis (though not all samples were taken for all individuals and years). Tag identifiers of these birds can be cross-referenced with strutting and copulations to investigate the effect of parasites on strutting and mating success. ",,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+Column name,Values and units,Description,Notes
+binder_pdf_page_number,Numeric,"Page number of binder scans that data was sourced from. Pages unique within leks, but not between. ",Some observations span multiple pages - indicated by two numbers separated by comma. 
+year,"Year, 4-digit numeric",Year of observation. ,
+month,"Month, numeric",Month of observation. ,
+day,"Day, numeric",Day of observation. ,
+time_start,"Time, 24H H:MM",Time individual was found. ,
+time_end,"Time, 24H H:MM",Time individual was released/capture ended. ,
+age,Character,"Age of grouse; either juvenile (""juven"") (<=1 year old), or adult (""adult"") (>1 year old). Juveniles separated from adults by morphology (different colouration, small air sacs) and behaviour (clumsiness, inadeptness at strutting). ",
+sex,Character,Sex of captured grouse. ,
+lek_name,Character,Name of lek on which individual was found. ,
+observer,Character string,Researcher who found grouse. ,
+capture_technique,Character string,Method in which grouse was captured. ,"Some observations are from the Removal Study, where grouse were lethally removed. Indicated in comments if grouse is from removal study. "
+left_tag_colour,Character,"Patagial tag colour found on the left wing of the grouse. Letter corresponds to colour of tag. Within leks, no two grouse should have the same colour combination. ",
+left_tag_number,Numerical,Patagial tag number found on the left wing of the grouse. Number corresponds to unique numerical identifer of tag. I," If number not indicated, the number may not have been visible on the bird, it may have worn off, or the tag did not have a number. "
+left_tag_code,"Character,numerical","Unique identifier of tag on left wing of the grouse. First letter corresponds to colour, number corresponds to unique numerical identifier of tag (if present). ",
+right_tag_colour,Character,"Patagial tag colour found on the right wing of the grouse. Letter corresponds to colour of tag. Within leks, no two grouse should have the same colour combination. ",
+right_tag_number,Numerical,Patagial tag number found on the right wing of the grouse. Number corresponds to unique numerical identifer of tag. I," If number not indicated, the number may not have been visible on the bird, it may have worn off, or the tag did not have a number. "
+right_tag_code,"Character,numerical","Unique identifier of tag on right wing of the grouse. First letter corresponds to colour, number corresponds to unique numerical identifier of tag (if present). ",
+wgyf_leg_band,"Character, numerical",,
+dominance,Character,"Position of grouse in social heirarchy of lek  - usually ""master cock"" or ""subordinate"". ",
+weight_bird_and_bag_kg,"Numerical, kilograms","Weight of the grouse, measured using a bag to contain grouse. Weight includes that of the bag. ",
+weight_bag_kg,"Numerical, kilograms",Weight of the bag used to way the grouse only. ,
+weight_bird_kg,"Numerical, kilograms",Weight of the grouse. ,
+total_length_mm,"Numerical, milimetres ",Total length of the grouse from beak to tail. ,
+tail_length_mm,"Numerical, milimetres ",Length of grouse tail. ,
+num_tail_feathers,"Numerical, count",Number of tail feathers on grouse. ,Typically not counted for females. 
+head_length_mm,"Numerical, milimetres ",Length of grouse head. ,
+wing_length_mm,"Numerical, milimetres ",Length of (left or right) grouse wing. ,Typically only one wing was measured. 
+bill_length_mm,"Numerical, milimetres ",Length of grouse bill. ,
+bill_depth_mm,"Numerical, milimetres ",Depth of bill. ,
+keel_length_mm,"Numerical, milimetres ",Length of grouse keel. ,
+comb_length_mm,"Numerical, milimetres ",Length of grouse comb. ,
+tarsus_length_mm,"Numerical, milimetres ",Length of grouse tarsus. ,
+toe_length_mm,"Numerical, milimetres ",Length of grouse toe. ,
+air_sac_colour,Character string,"Colour of grouse air sacs, identified using a philatelic colour strip. ",
+comb_colour,Character string,"Colour of grouse comb, identified using a philatelic colour strip.  ",
+lice_back_of_head,Logical (yes/no),Presence of lice on the back of the head. ,
+num_lice_on_comb,Numerical,Number of lice counted on combs. ,"A few rows only indicated ""yes"" rather than a numeric value- these were replaced with NA and noted in the comments. "
+num_lice_on_air_sac_left,Numerical,Number of lice counted on left air sac. ,
+num_lice_on_air_sac_right,Numerical,Number of lice counted on right air sac. ,
+total_num_lice_on_air_sacs,Numerical,Total number of lice counted on both air sacs. ,
+lice_ID_ifpresent,Character,"Species identify of louse, if found. ",
+hematomas_combs,Logical (yes/no),Presence of hematomas on grouse combs. ,Hematomas are blood-filled wounds caused by lice. 
+num_hematomas_on_comb_left,Numerical,Number of hematomas counted on left comb. ,Hematomas are blood-filled wounds caused by lice. 
+num_hematomas_on_comb_right,Numerical,Number of hematomas counted on right comb. ,Hematomas are blood-filled wounds caused by lice. 
+total_num_hematomas_on_combs,Numerical,Total number of hematomas counted on both combs. ,
+hematomas_combs_comments,Character string,Notes about hematomas on combs. ,
+hematomas_air_sacs,Logical (yes/no),Presence of hematomas on grouse air sacs. ,Hematomas are blood-filled wounds caused by lice. 
+num_hematomas_on_air_sac_left,Numerical,Number of hematomas on left air sac. ,Hematomas are blood-filled wounds caused by lice. 
+num_hematomas_on_air_sac_right,Numerical,Number of hematomas on right air sac. ,Hematomas are blood-filled wounds caused by lice. 
+total_num_hematomas_on_air_sacs,Numerical,Total number of hematomas counted on both air sacs. ,
+hematomas_air_sacs_comments,Character string,Notes about hematomas on air sacs. ,
+hematoma_group,Categorical,"Category of hematoma group number on males. Lower numbers indicate less extensive hematomas, higher numbers indicate more extensive hematomas. ",
+hematomas_applied,Logical (yes/no),Indicates whether artificial hematomas were applied for experimental study not included in this dataset. ,
+cut_feathers,Logical (yes/no),Indicates whether feathers were cut to reveal patagial tag. ,
+collect,Logical (yes/no),Indicates whether clipped feathers were kept to examine for ectoparasites. ,
+labelled,Logical (yes/no),Indicates whether bag containing clipped feathers were labelled. ,
+samples_collected_blood,Logical (yes/no),Indicates whether blood samples were taken from grouse. ,
+blood_smear,Logical (yes/no),Indicates whether blood sample was smeared to analyze for the presence of parasites. ,
+blood_tryps,Logical (yes/no),Evidence of tryps (trypanosoma) in blood samples from observed bird. ,"Blood samples collected in the field, and then processed in the lab within 24hrs. "
+blood_malaria,Logical (yes/no),Evidence of plasmodium (avian malaria) from blood sample. ,"Values of ""maybe"" indicate evidence of a parasite was found, but it could not be distinguished. "
+blood_leuco,Logical (yes/no),Evidence of leucochloridium (parasitic flatworm) in blood. ,Some values 
+blood_haema,Logical (yes/no),Evidence of haemoproteus in blood sample. ,"Values of ""maybe"" indicate evidence of a parasite was found, but it could not be distinguished. "
+samples_collected_fecal,Logical (yes/no),Indicates whether fecal sample was taken. ,
+fecal_sample_mites ,Logical (yes/no),Presence of mites in fecal sample from observed bird. ,"Fecal samples collected in the field, and then put in fridge for several weeks. "
+fecal_sample_spores,Logical (yes/no),Presence of spores in fecal sample from obesrved bird. ,"Fecal samples collected in the field, and then put in fridge for several weeks. "
+fecal_samples_coccidia,Logical (yes/no),Evidence of coccidia in fecal sample from observed bird. ,"Fecal samples collected in the field, and then put in fridge to stabilize coccidia for several weeks. Coccidia could only be detected via shedding eggs, which may explain low levels of observation. "
+fecal_sample_comments,Character string,Commnnts on fecal sample,
+samples_collected_ectoparasites,Logical (yes/no),Indicates whether ectoparasites were sampled from bird. ,
+samples_collected_cecal,Logical (yes/no),Indicates whether cecal sample was taken from bird. ,
+hematocrit_cells_1,"Numerical, milimetres ",Amount of first blood sample volume comprised of cells. ,"High amounts of cells can indicate an infection, especially white blood cells (which were not often differentiated). "
+hematocrit_cells_2,"Numerical, milimetres ",Amount of second blood sample volume comprised of cells. ,"High amounts of cells can indicate an infection, especially white blood cells (which were not often differentiated). "
+hematocrit_plasma_1,"Numerical, milimetres ",Amount of first blood sample volume comprised of plasma. ,
+hematocrit_plasma_2,"Numerical, milimetres ",Amount of second blood sample volume comprised of plasma. ,
+hematocrit_total_1,"Numerical, milimetres ",Total volume of first blood sample. ,
+hematocrit_total_2,"Numerical, milimetres ",Total volume of second blood sample. ,
+slide_number,Numerical,Number ID of slides on which blood samples were analyzed. ,
+box_number,Categorical,Box ID where slides were stored. ,
+existing_injuries,Character string,Comments on injuries found on grouse before capture. ,
+handling_injury,Character string,Injuries caused to grouse during handling,
+stresses_while_handling_describe,Character string,Stress level and comments on grouse during handling. ,
+comments,Character,Notes about individual/conditions when observed on the lek. ,"Comments of note: RECAP indicates bird was captured in a previous year, and may or may not have measurements taken on this capture. Removal study individuals were sometimes sent to Beth Williams, a wildlife veterinarian at the University of Wyoming. "

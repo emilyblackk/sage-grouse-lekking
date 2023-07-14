@@ -1,6 +1,6 @@
 ﻿Column name,Values and units,Description,Notes
-tag,"Numerical, character","Unique identifier for patagial tag on grouse wing. Most commonly a series of numbers, but in some cases a letter or blank (NA). ",
-wing,Character,Indicates the wing tag was observed on (right or left). ,
+tag,"Numerical, character",Unique numerical identifier for patagial tag on grouse wing. ,
+wing,Character,Indicates the wing tag was observed on (right or left). ,Some rows contain NA for this value. 
 lek_name,Character,Name of lek individual was captured on. ,
 age,Character,"Age of grouse; either juvenile (<=1 year old), or adult (>1 year old). Juveniles separated from adults by morphology (different colouration, small air sacs) and behaviour (clumsiness, inadeptness at strutting). ",
 sex,Character,Sex of grouse (male or female). ,

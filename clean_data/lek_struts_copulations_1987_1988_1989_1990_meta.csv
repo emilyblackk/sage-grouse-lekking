@@ -1,0 +1,59 @@
+﻿"Metadata for strut and copulation records, 1987 to 1990",,,
+,,,
+Data curator: Emily Black ,,,
+"Affiliation: Department of Zoology, University of British Columbia, Vancouver, BC, and the Living Data Project ",,,
+Contact: emily@zoology.ubc.ca,,,
+,,,
+"Data collectors: Pat Deibert (nee White) , Linda Johnson, Margo Spurrier, Dr. Mark S. Boyce",,,
+"Affiliation: PD - Bureau of Land Management, Cheyenne, Wyoming; MSB - University of Alberta, Edmonton, AB",,,
+,,,
+"Data entry: Nav Gahir, Isabel Weise",,,
+"Affiliation: NG, IW - Living Data Project",,,
+,,,
+Data description: ,,,
+"From 1987-1990, greater sage-grouse leks were visited by graduate students, professors, and volunteers to survey for bird abundance, lekking behaviour, and strutting and copulation behaviour. Included in this dataset are observations of lek conditions on the day of surveying (weather, ground condition, observers, sunrise time), strutting behaviour (counts of struts, fights, individual ID) and copulation time and numbers. These data are sourced from two locations: physical binders, and floppy disks organized by Patricia Deibert (nee White). Where the information in each row is sourced from is indicated in the ""source"" column. ",,,
+,,,
+,,,
+,,,
+,,,
+Column name,Values and units,Description,Notes
+source,Character string,"Where the data in each row was sourced from: the physical binders (binder), a floppy disk (floppy), or the merging of both records in the case of duplicate records (binder, floppy). ","Though the floppy disks should have been duplicates of binder records, a small number did not find a match due to typos, disagreements in records, or potentially being new records after binder recordings. "
+binder_pdf_page_number,Numeric,"Page number of binder scans that data was sourced from. Pages unique within leks, but not between. ",Some observations span multiple pages - indicated by two numbers separated by comma. 
+year,"Year, 4-digit numeric",Year of observation. ,
+month,"Month, numeric",Month of observation. ,
+day,"Day, numeric",Day of observation. ,
+arrival_time,"Time,24H  H:MM",24-hour time of arrival at lek,
+sunrise_time,"Time,24H  H:MM",24-hour time of sunrise on day of observation,
+observer,Character string,Name(s) of individuals who collected lek observations,
+lek_name,Character string,Lek in which individual was observed strutting. ,Sybille Springs lek is now known as Roundtop lek. 
+trapping_activity,Character string,"If performed, the type of trapping activity performed on the lek ",
+wind_mph,"Various; numerical miles per hour, character string","Wind speeds in miles per hour on day of observation, and any notes on wind speed",
+cloud_cover_percent_comments,"Various; numerical percent, character string","Cloud cover in % cover on day of observation, and any notes on cloud cover ",
+snowing_status,"Various; logical (yes/no), character strings","Snowing status; if yes, was snowing, if no, was not snowing. Includes associated comments. ",
+raining_status,"Various; logical (yes/no), character strings","Raining status; if yes, was raining, if no, was not raining. Includes associated comments. ",
+temp_f,"Temperature, degrees fahrenheit",Temperature in degrees fahrenheit. ,Some values are approximate (indicated by ~) or a range (indicated by dash)
+other_weather_conditions,Character string,Other comments on condition of lek upon arrival ,
+lek_ground_condition,Character string,Comments on condition of ground at lek,
+predator_disturbance_type,Character string,"Type of predators that visited lek on day of observation. If multiple types, they are separated by commas and arranged in chronological order. ",
+predator_disturbance_time,"Time,24H  H:MM","Time of predator visit to lek on day of observation. If multiple, times are separated by column and correspond to predator type in same order. ",
+type,"Character string, strut or copulation",Indicates whether row corresponds to strutting or copulation,
+left_tag_colour,Character,"Patagial tag colour found on the left wing of the grouse. Letter corresponds to colour of tag. Within leks, no two grouse should have the same colour combination. Colours: G = green, R = red, Y = yellow, W = white, O = orange, B = blue. May also be found in combination with each other on tags.  ","If mismatch between binder and floppy, values taken from floppy. Unmarked individuals labelled as ""unmarked"" in left tag color. If color not indicated, the tag may not have been visible. "
+left_tag_number,Numeric,Patagial tag number found on the left wing of the grouse. Number corresponds to unique numerical identifer of tag. ,"If mismatch between binder and floppy, values taken from floppy.  If number not indicated, the number may not have been visible on the bird, it may have worn off, or the tag did not have a number. "
+left_tag_code,"Character, numeric","Patagial tag found on the left wing of the grouse. Letter corresponds to colour of tag, number corresponds to unique numerical identifier. Within leks, no two grouse should have the same colour combination. Colours: G = green, R = red, Y = yellow, W = white, O = orange, B = blue. May also be found in combination with each other on tags. ","If mismatch between binder and floppy, values taken from floppy.  If number not indicated, the number may not have been visible on the bird, it may have worn off, or the tag did not have a number. "
+right_tag_colour,Character,"Patagial tag found on the right wing of the grouse. Letter corresponds to colour of tag, number corresponds to unique numerical identifier. Within leks, no two grouse should have the same colour combination. Colours: G = green, R = red, Y = yellow, W = wh","If mismatch between binder and floppy, values taken from floppy. Unmarked individuals labelled as ""unmarked"" in left tag color. If color not indicated, the tag may not have been visible. "
+right_tag_number,Numeric,Patagial tag found on the right wing of the grouse. Number corresponds to unique numerical identifier of tag. ," If mismatch between binder and floppy, values taken from floppy.  If number not indicated, the number may not have been visible on the bird, it may have worn off, or the tag did not have a number. "
+right_tag_code,"Character, numeric","Patagial tag found on the right wing of the grouse. Letter corresponds to colour of tag, number corresponds to unique numerical identifier. Within leks, no two grouse should have the same colour combination. Colours: G = green, R = red, Y = yellow, W = white, O = orange, B = blue. May also be found in combination with each other on tags.  ","If mismatch between binder and floppy, values taken from floppy.   If number not indicated, the number may not have been visible on the bird, it may have worn off, or the tag did not have a number. "
+age,Character,"Age of grouse; either juvenile(""juven"") (<=1 year old), or adult (>1 year old). Juveniles separated from adults by morphology (different colouration, small air sacs) and behaviour (clumsiness, inadeptness at strutting). ",
+strut_time_start,"Time, 24H  H:MM",Time of start of grouse strut count. ,"If mismatch between binder and floppy, values taken from binder. Most grouse struts were counted for 5 minutes intervals. Some time periods are exceptions, being shorter or longer. "
+strut_time_end,"Time, 24H  H:MM",Time of end of grouse strutting count. ,"If mismatch between binder and floppy, values taken from binder. Most grouse struts were counted for 5 minutes intervals. Some time periods are exceptions, being shorter or longer. "
+num_of_struts,Numeric,Total number of struts counted during survey period. ,"If mismatch between binder and floppy, values taken from binder. "
+struts_5_min,Numeric,Number of struts performed by individual per 5 minutes of observation. ,"If mismatch between binder and floppy, values taken from binder. If individual was surveyed for less than 5 minutes, the total number of struts was assigned to this column (e.g. if from 6:22 to 6:24 a grouse strut 24 times, a value of 24 was assigned to struts_5_min). This was consistent with the methods of Pat White in the floppy disks. "
+distance_to_hens_category,"Distance, categorical","Distance strutting male was away from hens. 0 = no hens on lek, 1 = 0-5 meters, 2 = 5 - 10 meters, 3 = >10 meters, 4 = unknown. ","If mismatch between binder and floppy, values taken from floppy. Proximity of hens may affect strutting frequency independent of male vigor/fitness. "
+distance_to_hens_notes,Character string,Notes associated with distance from hens. ,
+fights,Character string,Details about fights observed during strutting. ,"Three main types of fights: standoff, wing beat, all out. "
+copulation_time,"Time, 24H  H:MM",Time of copulation,
+num_of_copulations,Numeric,Number of copulations for each individual. ,Individuals with no tag indicated labelled as unmarked. 
+breed,Logical (yes/no),Indicates whether individual bred when observed on the lek. , 
+malaria,Logical (yes/no),Indicates whether individual had avian malaria. ,
+lice,Logical (yes/no),Indicates whether individual had lice.,Not all individuals were sampled. 
+other_fights_and_comments,Character string,"Other general notes regarding fights, individuals on lek, lek conditions and characteristics. ",
